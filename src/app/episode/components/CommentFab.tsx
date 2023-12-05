@@ -31,7 +31,7 @@ export default function CommentFab({comments = [{id:"", replier_name:"", text:""
                     height: "calc(100% - 240px)",
                     background:"white",
                     borderRadius: 14,
-                    transform: isCommentPopupOpen ? "translate(0, 120px) scale(1)" : "translate(50%, calc(100% - 120px)) scale(0.1)",
+                    transform: isCommentPopupOpen ? "translate(0, 120px) scale(1)" : "translate(50%, 100%) scale(0.1)",
                     opacity: isCommentPopupOpen ? 1 : 0,
                     transition: "transform 0.3s, opacity 0.2s",
                     pointerEvents: isCommentPopupOpen ? "all" : "none",
