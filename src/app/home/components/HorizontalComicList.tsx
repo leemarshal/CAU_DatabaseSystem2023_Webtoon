@@ -1,9 +1,36 @@
 import ComicItem from "./ComicItem";
 
-export default function HorizontalComicList({comicList=[{id:0, title:"", thumb:""}]}){
-    return <div style={{padding:20, overflow:"scroll", whiteSpace:"nowrap", background:"white"}}>
-        {comicList.map((item, index) =>
-            <ComicItem key={index} title={item.title} image={item.thumb} path={"/comic?id=" + item.id} width={"45%"}/>
-        )}
+export default function HorizontalComicList({
+  props,
+}: {
+  props: {
+    comicList: {
+      WebtoonID: number;
+      Title: string | null;
+      ThumbnailURL: string | null;
+    }[];
+  };
+}) {
+  return (
+    <div
+      style={{
+        padding: 20,
+        overflow: "scroll",
+        whiteSpace: "nowrap",
+        background: "white",
+      }}
+    >
+      {props.comicList.map((item, index) => (
+        <ComicItem
+          key={index}
+          props={{
+            title: item.Title ?? "",
+            image: item.ThumbnailURL ?? "",
+            path: "/comic?id=" + item.WebtoonID,
+            width: "45%",
+          }}
+        />
+      ))}
     </div>
+  );
 }

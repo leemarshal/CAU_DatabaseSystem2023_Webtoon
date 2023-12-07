@@ -1,34 +1,39 @@
-'use client'
 import ToolBar from "./components/ToolBar";
 import React from "react";
-import {useSearchParams} from "next/navigation";
 import EpisodeItem from "./components/EpisodeItem";
+import { PrismaClient } from "@prisma/client";
 
-export default function Comic() {
-    const TOOLBAR_HEIGHT = 70
-    const params = useSearchParams()
+export default async function Comic({ searchParams }: { searchParams: any }) {
+  const TOOLBAR_HEIGHT = 70;
 
-    //todo: DB 연결
-    const title = "웹툰 ID : " + params.get("id")
-    const episodes = [
-        {id: 1, thumb: "https://source.unsplash.com/500x500", title: "Test", episode_num: 1},
-        {id: 2, thumb: "https://source.unsplash.com/500x500", title: "Test", episode_num: 2},
-        {id: 3, thumb: "https://source.unsplash.com/500x500", title: "Test", episode_num: 3},
-        {id: 4, thumb: "https://source.unsplash.com/500x500", title: "Test", episode_num: 4},
-    ]
+  const title = "웹툰 ID : " + searchParams.id;
 
-    return (
-        <>
-            <ToolBar title={title} height={TOOLBAR_HEIGHT}/>
+  const prisma = new PrismaClient();
+  const episodes = await prisma.episodesWebtoon.findMany({
+    where: {
+      WebtoonID: Number(searchParams.id),
+    },
+    orderBy: [{ EpisodeID: "asc" }],
+    include: {
+      Episodes: true,
+    },
+  });
 
-            <div style={{paddingTop: TOOLBAR_HEIGHT, background: "white"}}>
-                {episodes.map(item => <EpisodeItem
-                    key={item.id}
-                    path={"/episode?id=" + item.id}
-                    height={70}
-                    title={item.title}
-                    thumb={item.thumb}
-                />)}
-            </div>
-        </>)
+  return (
+    <>
+      <ToolBar title={title} height={TOOLBAR_HEIGHT} />
+
+      <div style={{ paddingTop: TOOLBAR_HEIGHT, background: "white" }}>
+        {episodes.map((item) => (
+          <EpisodeItem
+            key={item.EpisodeID}
+            path={"/episode?id=" + item.EpisodeID}
+            height={70}
+            title={item.Episodes.Title}
+            thumb={""}
+          />
+        ))}
+      </div>
+    </>
+  );
 }

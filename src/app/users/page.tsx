@@ -10,7 +10,7 @@ export default async function Authors() {
     <main>
       {users.map((user) => {
         return (
-          <div>
+          <div key={user.UserID}>
             <span>id:{user.UserID}</span> <span>name:{user.Username}</span>{" "}
             <span>email:{user.Email}</span>
           </div>
