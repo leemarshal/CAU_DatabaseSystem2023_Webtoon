@@ -222,3 +222,76 @@ VALUES
 (10, 'Thriller', 'Focused on creating suspense, excitement, and high levels of anticipation');
 
 -- 준오형 ddl.sql 기준 Genres(line 251~) 밑으로 부탁드립니다.
+-- 완료
+
+INSERT INTO WebtoonGenres (WebtoonID, GenreID) VALUES
+(1, 10),
+(2, 8),
+(3, 6),
+(4, 4),
+(5, 2),
+(6, 1),
+(7, 3),
+(8, 5),
+(9, 7),
+(10, 9);
+
+INSERT INTO WebtoonTags (WebtoonTagID, WebtoonID, TagID) VALUES
+(1, 1, 5),
+(2, 2, 10),
+(3, 3, 4),
+(4, 4, 9),
+(5, 5, 3),
+(6, 6, 8),
+(7, 7, 2),
+(8, 8, 7),
+(9, 9, 1),
+(10, 10, 6);
+
+INSERT INTO Notice (NoticeID, Title, Content, PostedDate, IsActive) VALUES
+(1, 'Important Update', 'We have an important update for our users.', '2023-01-01', 'True'),
+(2, 'New Webtoon Release', 'Check out our latest webtoon release!', '2023-02-15', 'True'),
+(3, 'Maintenance Notice', 'Scheduled maintenance on our platform.', '2023-03-10', 'True'),
+(4, 'Upcoming Event', 'Get ready for our upcoming event!', '2023-04-05', 'True'),
+(5, 'System Upgrade', 'Our system will undergo an upgrade this weekend.', '2023-05-20', 'True'),
+(6, 'Holiday Closure', 'Our services will be closed for the holiday.', '2023-07-01', 'True'),
+(7, 'Community Poll', 'Share your thoughts in our community poll!', '2023-08-10', 'True'),
+(8, 'Bug Fix', 'We have fixed several bugs on our platform.', '2023-09-15', 'True'),
+(9, 'New Feature Announcement', 'Exciting new features are coming soon!', '2023-10-10', 'True'),
+(10, 'Thank You for Your Support', 'We appreciate your continued support!', '2023-12-01', 'True');
+
+INSERT INTO UserNoticeRead (ReaderID, NoticeID) VALUES
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 3),
+(5, 4),
+(1, 5),
+(2, 6),
+(3, 7),
+(4, 8),
+(5, 9);
+
+INSERT INTO Subscriptions (ReaderID, WebtoonID, SubscriptionDate) VALUES
+(11, 1, '2023-01-02'),
+(12, 2, '2023-02-18'),
+(13, 3, '2023-03-12'),
+(14, 4, '2023-04-07'),
+(15, 5, '2023-05-25'),
+(16, 6, '2023-07-05'),
+(17, 7, '2023-08-15'),
+(18, 8, '2023-09-20'),
+(19, 9, '2023-10-15'),
+(20, 10, '2023-12-05');
+
+INSERT INTO promotion_event (event_id, start_date, end_date, event_title, cookie_discount_rate) VALUES
+(1, '2023-01-01', '2023-01-31', 'New Year Sale', 10),
+(2, '2023-02-14', '2023-02-28', 'Christmas Special', 15),
+(3, '2023-03-01', '2023-03-15', 'Spring Promotion', 12),
+(4, '2023-04-10', '2023-04-30', 'April Flash Sale', 8),
+(5, '2023-05-15', '2023-05-31', 'Mid-Year Discounts', 20),
+(6, '2023-07-01', '2023-07-15', 'Summer Bonanza', 18),
+(7, '2023-08-05', '2023-08-20', 'Back-to-School Savings', 15),
+(8, '2023-09-10', '2023-09-30', 'Fall Frenzy', 12),
+(9, '2023-10-05', '2023-10-20', 'Halloween Spooktacular', 25),
+(10, '2023-11-25', '2023-12-10', 'Black Friday Extravaganza', 30);
