@@ -72,11 +72,9 @@ CREATE TABLE Tags (
 
 CREATE TABLE Readers (
     ReaderID INT PRIMARY KEY,
-    TagID INT,
     CookieAmount INT,
     IsActive BOOLEAN,
     FOREIGN KEY (ReaderID) REFERENCES Users(UserID),
-    FOREIGN KEY (TagID) REFERENCES Tags(TagID)
 );
 
 CREATE TABLE AuthorsWebtoons (
