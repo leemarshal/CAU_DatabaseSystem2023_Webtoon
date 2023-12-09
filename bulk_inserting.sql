@@ -120,15 +120,15 @@ VALUES
 INSERT INTO Episodes (EpisodeID, WebtoonID, Title, ReleaseDate, ThumbnailURL, EpisodeIndex)
 VALUES
 (1, 1, 'Episode 1', '2023-01-01', 'https://example.com/ep_thumbnail1.jpg', 1),
-(2, 1, 'Episode 2', '2023-01-02', 'https://example.com/ep_thumbnail2.jpg', 2),
-(3, 1, 'Episode 3', '2023-01-03', 'https://example.com/ep_thumbnail3.jpg', 3),
-(4, 1, 'Episode 4', '2023-01-04', 'https://example.com/ep_thumbnail4.jpg', 4),
-(5, 1, 'Episode 5', '2023-01-05', 'https://example.com/ep_thumbnail5.jpg', 5),
-(6, 1, 'Episode 6', '2023-01-06', 'https://example.com/ep_thumbnail6.jpg', 6),
-(7, 1, 'Episode 7', '2023-01-07', 'https://example.com/ep_thumbnail7.jpg', 7),
-(8, 1, 'Episode 8', '2023-01-08', 'https://example.com/ep_thumbnail8.jpg', 8),
-(9, 1, 'Episode 9', '2023-01-09', 'https://example.com/ep_thumbnail9.jpg', 9),
-(10, 1, 'Episode 10', '2023-01-10', 'https://example.com/ep_thumbnail10.jpg', 10);
+(2, 1, 'Episode 2', '2023-01-08', 'https://example.com/ep_thumbnail2.jpg', 2),
+(3, 1, 'Episode 3', '2023-01-15', 'https://example.com/ep_thumbnail3.jpg', 3),
+(4, 1, 'Episode 4', '2023-01-22', 'https://example.com/ep_thumbnail4.jpg', 4),
+(5, 1, 'Episode 5', '2023-01-29', 'https://example.com/ep_thumbnail5.jpg', 5),
+(6, 1, 'Episode 6', '2023-02-05', 'https://example.com/ep_thumbnail6.jpg', 6),
+(7, 1, 'Episode 7', '2023-02-12', 'https://example.com/ep_thumbnail7.jpg', 7),
+(8, 1, 'Episode 8', '2023-02-19', 'https://example.com/ep_thumbnail8.jpg', 8),
+(9, 1, 'Episode 9', '2023-02-26', 'https://example.com/ep_thumbnail9.jpg', 9),
+(10, 1, 'Episode 10', '2023-03-05', 'https://example.com/ep_thumbnail10.jpg', 10);
 
 INSERT INTO EpisodesMedia (EpisodeMediaID, EpisodeID, MediaURL)
 VALUES
@@ -204,6 +204,126 @@ VALUES
 (9, 9, 9.0),
 (10, 10, 10.0);
 
+-- webtoon avg rating과 user token 은 잠시 스킵
+
+INSERT INTO ReaderSearch (ReaderSearchID, ReaderID, CreationDate, SearchKeyword)
+VALUES
+(1, 11, NOW(), '소년왕도물'),
+(2, 12, NOW(), '액션'),
+(3, 13, NOW(), '이능력배틀물'),
+(4, 14, NOW(), '판타지'),
+(5, 15, NOW(), '고인물'),
+(6, 16, NOW(), '사이다'),
+(7, 17, NOW(), '드라마'),
+(8, 18, NOW(), '세계관'),
+(9, 19, NOW(), '소설원작'),
+(10, 20, NOW(), '먼치킨');
+
+INSERT INTO ReaderPaymentMethods (ReaderPaymentMethodID, ReaderID, PaymentMethodDetails)
+VALUES
+(1, 11, 'MTExMS0xMTExLTExMTEtMTExMQ=='),  -- Decode this Base64 string for actual details
+(2, 12, 'MjIyMi0yMjIyLTIyMjItMjIyMg=='),  -- 우선 카드 번호를 encode 했다고 가정하고 작성함
+(3, 13, 'MzMzMy0zMzMzLTMzMzMtMzMzMw=='),
+(4, 14, 'NDQ0NC00NDQ0LTQ0NDQtNDQ0NA=='),
+(5, 15, 'NTU1NS01NTU1LTU1NTUtNTU1NQ=='),
+(6, 16, 'NjY2Ni02NjY2LTY2NjYtNjY2Ng=='),
+(7, 17, 'Nzc3Ny03Nzc3LTc3NzctNzc3Nw=='),
+(8, 18, 'ODg4OC04ODg4LTg4ODgtODg4OA=='),
+(9, 19, 'OTk5OS05OTk5LTk5OTktOTk5OQ=='),
+(10, 20, 'MDAwMC0wMDAwLTAwMDAtMDAwMA==');
+
+INSERT INTO ReaderCookiePurchases (ReaderCookiePurchaseID, ReaderID, Amount, Date, ReaderPaymentMethodID)
+VALUES
+(1, 11, 150, '2023-01-15', 1),
+(2, 12, 180, '2023-02-23', 2),
+(3, 13, 250, '2023-03-03', 3),
+(4, 14, 270, '2023-04-04', 4),
+(5, 15, 310, '2023-05-05', 5),
+(6, 16, 355, '2023-06-06', 6),
+(7, 17, 405, '2023-07-07', 7),
+(8, 18, 460, '2023-08-08', 8),
+(9, 19, 505, '2023-09-09', 9),
+(10, 20, 560, '2023-10-10', 10);
+
+INSERT INTO ReaderCookieUse (ReaderCookieUseID, ReaderID, Amount, Date)
+VALUES
+(1, 11, 50, NOW()),
+(2, 12, 30, NOW()),
+(3, 13, 50, NOW()),
+(4, 14, 20, NOW()),
+(5, 15, 10, NOW()),
+(6, 16, 5, NOW()),
+(7, 17, 5, NOW()),
+(8, 18, 10, NOW()),
+(9, 19, 5, NOW()),
+(10, 20, 10, NOW());
+
+INSERT INTO ReaderBookmark (ReaderBookmarkID, ReaderID, WebtoonID, EpisodeID)
+VALUES
+(1, 11, 1, 10),
+(2, 12, 1, 2),
+(3, 13, 1, 3),
+(4, 14, 1, 4),
+(5, 15, 1, 5),
+(6, 16, 1, 6),
+(7, 17, 1, 7),
+(8, 18, 1, 8),
+(9, 19, 1, 9),
+(10, 20, 1, 1);
+
+INSERT INTO Reading (ReadingID, ReaderID, EpisodeID, ReadDate)
+VALUES
+(1, 11, 1, '2023-03-06'),
+(2, 11, 2, '2023-03-07'),
+(3, 11, 3, '2023-03-08'),
+(4, 11, 4, '2023-03-09'),
+(5, 11, 5, '2023-03-10'),
+(6, 11, 6, '2023-03-11'),
+(7, 11, 7, '2023-03-12'),
+(8, 11, 8, '2023-03-13'),
+(9, 11, 9, '2023-03-14'),
+(10, 11, 10, '2023-03-15');
+
+INSERT INTO Comments (CommentID, EpisodeID, ReaderID, CommentText, Timestamp, ParentCommentID)
+VALUES
+(1, 1, 11, '나 뉴진스 하니인데 개추눌렀다.', NOW(), -1),
+(2, 1, 12, '하니는 그런 말투 안써요', NOW(), 1),
+(3, 1, 13, '나 민지인데 하니 그런 말 쓴다.', NOW(), 1),
+(4, 1, 14, '이런 잦은 휴재 속 꾸준한 웹툰을 보니 문득.. 새삼스럽게.. 대단하다는 생각이든다.', NOW(), -1),
+(5, 1, 15, '기습숭배..!', NOW(), 4),
+(6, 1, 16, '문득, 새삼스럽게, 대단 금지', NOW(), 4),
+(7, 1, 17, '와 님들 제가 예상해봤는데 주인공은 사실 죽지 않음. 왜냐하면 주인공 죽으면 특정 연기가 보여야함.', NOW(), -1),
+(8, 1, 18, '와 쿠키 쓰고 예상한척 ㅋㅋ', NOW(), 7),
+(9, 1, 19, '헉.', NOW(), 7),
+(10, 1, 20, '좋아쒀. 다음화 빠르게 진행시켜.', NOW(), -1);
+
+-- CommentID가 1, 2, 4, 10인 댓글에 대해 Good 타입의 튜플 10개 이상 생성
+INSERT INTO CommentsLikes (LikeID, ReaderID, CommentID, LikeType)
+VALUES
+-- CommentID가 1
+(1, 11, 1, 'Good'),
+(2, 12, 1, 'Good'),
+(3, 13, 1, 'Good'),
+(4, 14, 1, 'Good'),
+(5, 15, 1, 'Good'),
+(6, 16, 1, 'Good'),
+(7, 17, 1, 'Good'),
+(8, 18, 1, 'Good'),
+(9, 19, 1, 'Good'),
+(10, 20, 1, 'Good'),
+-- CommentID가 2
+(11, 11, 2, 'Good'),
+(12, 12, 2, 'Good'),
+(13, 13, 2, 'Good'),
+-- CommentID가 4
+(14, 14, 4, 'Good'),
+(15, 15, 4, 'Good'),
+-- CommentID가 10
+(16, 16, 10, 'Good'),
+(17, 17, 10, 'Good'),
+(18, 18, 10, 'Good'),
+(19, 19, 10, 'Good'),
+(20, 20, 10, 'Good');
 
 
 -- 그저 예쁜 merger를 위한 꼼수
