@@ -153,7 +153,7 @@ CREATE TABLE WebtoonAvgRating (
 CREATE TABLE UserTokens (
     Token VARCHAR(255) PRIMARY KEY,
     UserID INT,
-    JWTExpiration DATETIME,
+    Expiration DATETIME,
     CreationDate DATETIME,
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
