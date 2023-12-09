@@ -24,19 +24,6 @@ VALUES
 (9, 9000),
 (10, 10000);
 
-INSERT INTO Episodes (EpisodeID, WebtoonID, Title, ReleaseDate, ThumbnailURL, EpisodeIndex)
-VALUES
-(1, 1, 'Episode 1', '2023-01-01', 'https://example.com/ep_thumbnail1.jpg', 1),
-(2, 1, 'Episode 2', '2023-01-02', 'https://example.com/ep_thumbnail2.jpg', 2),
-(3, 1, 'Episode 3', '2023-01-03', 'https://example.com/ep_thumbnail3.jpg', 3),
-(4, 1, 'Episode 4', '2023-01-04', 'https://example.com/ep_thumbnail4.jpg', 4),
-(5, 1, 'Episode 5', '2023-01-05', 'https://example.com/ep_thumbnail5.jpg', 5),
-(6, 1, 'Episode 6', '2023-01-06', 'https://example.com/ep_thumbnail6.jpg', 6),
-(7, 1, 'Episode 7', '2023-01-07', 'https://example.com/ep_thumbnail7.jpg', 7),
-(8, 1, 'Episode 8', '2023-01-08', 'https://example.com/ep_thumbnail8.jpg', 8),
-(9, 1, 'Episode 9', '2023-01-09', 'https://example.com/ep_thumbnail9.jpg', 9),
-(10, 1, 'Episode 10', '2023-01-10', 'https://example.com/ep_thumbnail10.jpg', 10);
-
 INSERT INTO WebtoonStatus (WebtoonID, Status)
 VALUES
 (1, 'Ongoing'),
@@ -130,7 +117,96 @@ VALUES
 (9, 4, 5),
 (10, 5, 5);
 
+INSERT INTO Episodes (EpisodeID, WebtoonID, Title, ReleaseDate, ThumbnailURL, EpisodeIndex)
+VALUES
+(1, 1, 'Episode 1', '2023-01-01', 'https://example.com/ep_thumbnail1.jpg', 1),
+(2, 1, 'Episode 2', '2023-01-02', 'https://example.com/ep_thumbnail2.jpg', 2),
+(3, 1, 'Episode 3', '2023-01-03', 'https://example.com/ep_thumbnail3.jpg', 3),
+(4, 1, 'Episode 4', '2023-01-04', 'https://example.com/ep_thumbnail4.jpg', 4),
+(5, 1, 'Episode 5', '2023-01-05', 'https://example.com/ep_thumbnail5.jpg', 5),
+(6, 1, 'Episode 6', '2023-01-06', 'https://example.com/ep_thumbnail6.jpg', 6),
+(7, 1, 'Episode 7', '2023-01-07', 'https://example.com/ep_thumbnail7.jpg', 7),
+(8, 1, 'Episode 8', '2023-01-08', 'https://example.com/ep_thumbnail8.jpg', 8),
+(9, 1, 'Episode 9', '2023-01-09', 'https://example.com/ep_thumbnail9.jpg', 9),
+(10, 1, 'Episode 10', '2023-01-10', 'https://example.com/ep_thumbnail10.jpg', 10);
 
+INSERT INTO EpisodesMedia (EpisodeMediaID, EpisodeID, MediaURL)
+VALUES
+(1, 1, 'https://example.com/bgm1.mp3'),
+(2, 2, 'https://example.com/bgm2.mp3'),
+(3, 3, 'https://example.com/bgm3.mp3'),
+(4, 4, 'https://example.com/bgm4.mp3'),
+(5, 5, 'https://example.com/bgm5.mp3'),
+(6, 6, 'https://example.com/bgm6.mp3'),
+(7, 7, 'https://example.com/bgm7.mp3'),
+(8, 8, 'https://example.com/bgm8.mp3'),
+(9, 9, 'https://example.com/bgm9.mp3'),
+(10, 10, 'https://example.com/bgm10.mp3');
+
+INSERT INTO EpisodesImage (EpisodeImageID, EpisodeID, CutNumber, ImageURL)
+VALUES
+(1, 1, 1, 'https://example.com/image1.jpg'),
+(2, 1, 2, 'https://example.com/image2.jpg'),
+(3, 1, 3, 'https://example.com/image3.jpg'),
+(4, 1, 4, 'https://example.com/image4.jpg'),
+(5, 1, 5, 'https://example.com/image5.jpg'),
+(6, 1, 6, 'https://example.com/image6.jpg'),
+(7, 1, 7, 'https://example.com/image7.jpg'),
+(8, 1, 8, 'https://example.com/image8.jpg'),
+(9, 1, 9, 'https://example.com/image9.jpg'),
+(10, 1, 10, 'https://example.com/image10.jpg');
+
+INSERT INTO EpisodesDialogue (DialogueID, EpisodeID, AuthorID, DialogueText, Timestamp)
+VALUES
+(1, 1, 1, '감사합니다.', CURRENT_TIMESTAMP),
+(2, 2, 1, '늦어서 미안합니다.', CURRENT_TIMESTAMP),
+(3, 3, 1, '재밌죠?', CURRENT_TIMESTAMP),
+(4, 4, 1, '.', CURRENT_TIMESTAMP),
+(5, 5, 1, '다음주에는 휴재입니다.', CURRENT_TIMESTAMP),
+(6, 6, 1, '다음 화가 기대되시죠?', CURRENT_TIMESTAMP),
+(7, 7, 1, '여러분의 응원이 큰 힘이 됩니다.', CURRENT_TIMESTAMP),
+(8, 8, 1, '오늘도 즐거운 하루 되세요!', CURRENT_TIMESTAMP),
+(9, 9, 1, '읽어주셔서 감사합니다.', CURRENT_TIMESTAMP),
+(10, 10, 1, '다음주에는 최종화로 찾아뵙겠습니다!', CURRENT_TIMESTAMP);
+
+INSERT INTO EpisodeRating (EpisodeRatingID, EpisodeID, ReaderID, Rating)
+VALUES
+(1, 1, 11, 8),
+(2, 1, 12, 9),
+(3, 1, 13, 10),
+(4, 1, 14, 8),
+(5, 1, 15, 8),
+(6, 1, 16, 9),
+(7, 1, 17, 10),
+(8, 1, 18, 8),
+(9, 1, 19, 9),
+(10, 1, 20, 10),
+(11, 2, 11, 8),
+(12, 3, 12, 9),
+(13, 4, 13, 10),
+(14, 5, 14, 8),
+(15, 6, 15, 9),
+(16, 7, 16, 10),
+(17, 8, 17, 8),
+(18, 9, 18, 9),
+(19, 10, 19, 10);
+
+INSERT INTO EpisodeAvgRating (EpisodeAvgRatingID, EpisodeID, Rating)
+VALUES
+(1, 1, 8.9),
+(2, 2, 8.0),
+(3, 3, 9.0),
+(4, 4, 10.0),
+(5, 5, 8.0),
+(6, 6, 9.0),
+(7, 7, 10.0),
+(8, 8, 8.0),
+(9, 9, 9.0),
+(10, 10, 10.0);
+
+
+
+-- 그저 예쁜 merger를 위한 꼼수
 
 INSERT INTO Genres (GenreID, Name, Description)
 VALUES
@@ -141,7 +217,8 @@ VALUES
 (5, 'Comedy', 'Light-hearted tales often characterized by humor, satire, and fun'),
 (6, 'Horror', 'Designed to scare and create a feeling of fear and unease'),
 (7, 'Sci-Fi', 'Stories often based on imaginative future scientific and technological discoveries'),
-(8, 'Adventure', 'Featuring exciting journeys, explorations, and often a hero's quest'),
+(8, 'Adventure', 'Featuring exciting journeys, explorations, and often a hero''s quest'),
 (9, 'Slice of Life', 'Depicting everyday life and ordinary experiences in a realistic manner'),
 (10, 'Thriller', 'Focused on creating suspense, excitement, and high levels of anticipation');
 
+-- 준오형 ddl.sql 기준 Genres(line 251~) 밑으로 부탁드립니다.
