@@ -1,3 +1,34 @@
+DROP TABLE IF EXISTS AuthorsWebtoons;
+DROP TABLE IF EXISTS EpisodesWebtoon;
+DROP TABLE IF EXISTS EpisodesMedia;
+DROP TABLE IF EXISTS EpisodesImage;
+DROP TABLE IF EXISTS EpisodesDialogue;
+DROP TABLE IF EXISTS EpisodeRating;
+DROP TABLE IF EXISTS EpisodeAvgRating;
+DROP TABLE IF EXISTS WebtoonAvgRating;
+DROP TABLE IF EXISTS UserTokens;
+DROP TABLE IF EXISTS ReaderSearch;
+DROP TABLE IF EXISTS ReaderCookiePurchases;
+DROP TABLE IF EXISTS ReaderPaymentMethods;
+DROP TABLE IF EXISTS ReaderCookieUse;
+DROP TABLE IF EXISTS ReaderBookmark;
+DROP TABLE IF EXISTS Reading;
+DROP TABLE IF EXISTS CommentsLikes;
+DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS WebtoonGenres;
+DROP TABLE IF EXISTS WebtoonTags;
+DROP TABLE IF EXISTS UserNoticeRead;
+DROP TABLE IF EXISTS Subscriptions;
+DROP TABLE IF EXISTS WebtoonStatus;
+DROP TABLE IF EXISTS Readers;
+DROP TABLE IF EXISTS Authors;
+DROP TABLE IF EXISTS Episodes;
+DROP TABLE IF EXISTS Webtoons;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Tags;
+DROP TABLE IF EXISTS Genres;
+DROP TABLE IF EXISTS Notice;
+
 CREATE TABLE Webtoons (
     WebtoonID INT PRIMARY KEY,
     Title VARCHAR(255),
@@ -42,8 +73,9 @@ CREATE TABLE Readers (
     ReaderID INT PRIMARY KEY,
     TagID INT,
     CookieAmount INT,
+    IsActive BOOLEAN,
     FOREIGN KEY (ReaderID) REFERENCES Users(UserID),
-    FOREIGN KEY (TagID) REFERENCES Tags(TagID) -- Tags 테이블이 아직 제공되지 않았으므로 추후 수정이 필요할 수 있습니다.
+    FOREIGN KEY (TagID) REFERENCES Tags(TagID)
 );
 
 CREATE TABLE AuthorsWebtoons (
@@ -57,18 +89,13 @@ CREATE TABLE AuthorsWebtoons (
 
 CREATE TABLE Episodes (
     EpisodeID INT PRIMARY KEY,
-    Title VARCHAR(255),
-    ReleaseDate DATE
-    -- DATE type is used for ReleaseDate as per your description.
-);
-
-CREATE TABLE EpisodesWebtoon (
-    EpisodeID INT PRIMARY KEY,
     WebtoonID INT,
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID),
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID)
-    -- This table creates a one-to-one relationship between Episodes and Webtoons. 
-    -- If an episode can belong to more than one webtoon, this structure will need to be adjusted.
+    Title VARCHAR(255),
+    ReleaseDate DATE,
+    ThumbnailURL VARCHAR(255),
+    EpisodeIndex INT,
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID),
+    UNIQUE (WebtoonID, EpisodeIndex)
 );
 
 CREATE TABLE EpisodesMedia (
@@ -84,10 +111,10 @@ CREATE TABLE EpisodesImage (
     EpisodeID INT,
     CutNumber INT,
     ImageURL VARCHAR(255),
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID)
-    -- CutNumber indicates the sequence of the image within an episode.
-    -- If CutNumber should be unique per EpisodeID, additional table constraints are required.
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID),
+    UNIQUE (EpisodeID, CutNumber)
 );
+
 
 CREATE TABLE EpisodesDialogue (
     DialogueID INT PRIMARY KEY,
@@ -115,7 +142,6 @@ CREATE TABLE EpisodeAvgRating (
     EpisodeID INT,
     Rating DECIMAL(3,1) CHECK (Rating >= 1 AND Rating <= 10),
     FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID)
-    -- DECIMAL(2,1) allows for ratings from 1.0 to 10.0 with one decimal place.
 );
 
 CREATE TABLE WebtoonAvgRating (
@@ -123,7 +149,6 @@ CREATE TABLE WebtoonAvgRating (
     WebtoonID INT,
     Rating DECIMAL(3,1) CHECK (Rating >= 1 AND Rating <= 10),
     FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID)
-    -- DECIMAL(2,1) allows for ratings from 1.0 to 10.0 with one decimal place.
 );
 
 CREATE TABLE UserTokens (
@@ -132,7 +157,6 @@ CREATE TABLE UserTokens (
     JWTExpiration DATETIME,
     CreationDate DATETIME,
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
-    -- JWTToken lengths can be adjusted based on the used token generation method.
 );
 
 CREATE TABLE ReaderSearch (
@@ -270,8 +294,47 @@ CREATE TABLE Subscriptions (
     PRIMARY KEY (ReaderID, WebtoonID),
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
     FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID)
-    -- By using ReaderID and WebtoonID as a composite primary key, 
-    -- this table now allows a reader to subscribe to multiple webtoons 
+    -- By using ReaderID and WebtoonID as a composite primary key,
+    -- this table now allows a reader to subscribe to multiple webtoons
     -- and ensures that each subscription is unique to a reader-webtoon pair.
 );
 
+'''
+ALTER TABLE `gyu_db`.`AuthorsWebtoons`
+DROP FOREIGN KEY `AuthorsWebtoons_ibfk_1`,
+DROP FOREIGN KEY `AuthorsWebtoons_ibfk_2`;
+ALTER TABLE `gyu_db`.`AuthorsWebtoons`
+ADD CONSTRAINT `AuthorsWebtoons_ibfk_1`
+  FOREIGN KEY (`WebtoonID`)
+  REFERENCES `gyu_db`.`Webtoons` (`WebtoonID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `AuthorsWebtoons_ibfk_2`
+  FOREIGN KEY (`AuthorID`)
+  REFERENCES `gyu_db`.`Authors` (`AuthorID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `gyu_db`.`Comments`
+DROP FOREIGN KEY `Comments_ibfk_1`,
+DROP FOREIGN KEY `Comments_ibfk_2`;
+ALTER TABLE `gyu_db`.`Comments`
+ADD CONSTRAINT `Comments_ibfk_1`
+  FOREIGN KEY (`EpisodeID`)
+  REFERENCES `gyu_db`.`Episodes` (`EpisodeID`)
+  ON DELETE CASCADE
+  ON UPDATE RESTRICT,
+ADD CONSTRAINT `Comments_ibfk_2`
+  FOREIGN KEY (`ReaderID`)
+  REFERENCES `gyu_db`.`Readers` (`ReaderID`)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT;
+
+ALTER TABLE `gyu_db`.`CommentsLikes`
+DROP FOREIGN KEY `CommentsLikes_ibfk_2`;
+ALTER TABLE `gyu_db`.`CommentsLikes`
+ADD CONSTRAINT `CommentsLikes_ibfk_2`
+  FOREIGN KEY (`CommentID`)
+  REFERENCES `gyu_db`.`Comments` (`CommentID`)
+  ON DELETE CASCADE;
+'''
