@@ -237,9 +237,10 @@ CREATE TABLE CommentsLikes (
     CommentID INT,
     LikeType ENUM('Good', 'Bad'),
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
-    FOREIGN KEY (CommentID) REFERENCES Comments(CommentID)
-    -- ENUM type is used for LikeType to restrict the value to either 'Good' or 'Bad'.
+    FOREIGN KEY (CommentID) REFERENCES Comments(CommentID),
+    UNIQUE (ReaderID, CommentID)
 );
+
 
 CREATE TABLE Genres (
     GenreID INT PRIMARY KEY,
