@@ -284,7 +284,7 @@ INSERT INTO Subscriptions (ReaderID, WebtoonID, SubscriptionDate) VALUES
 (19, 9, '2023-10-15'),
 (20, 10, '2023-12-05');
 
-INSERT INTO promotion_event (event_id, start_date, end_date, event_title, cookie_discount_rate) VALUES
+INSERT INTO PromotionEvent (event_id, start_date, end_date, event_title, cookie_discount_rate) VALUES
 (1, '2023-01-01', '2023-01-31', 'New Year Sale', 10),
 (2, '2023-02-14', '2023-02-28', 'Christmas Special', 15),
 (3, '2023-03-01', '2023-03-15', 'Spring Promotion', 12),

@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS Genres;
 DROP TABLE IF EXISTS Notice;
-DROP TABLE IF EXISTS promotion_event;
+DROP TABLE IF EXISTS PromotionEvent;
 
 CREATE TABLE Webtoons (
     WebtoonID INT PRIMARY KEY,
@@ -298,7 +298,7 @@ CREATE TABLE Subscriptions (
     -- and ensures that each subscription is unique to a reader-webtoon pair.
 );
 
-CREATE TABLE promotion_event (
+CREATE TABLE PromotionEvent (
     event_id INT PRIMARY KEY,
     start_date DATE,
     end_date DATE,
