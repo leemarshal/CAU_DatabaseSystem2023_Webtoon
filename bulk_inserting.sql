@@ -204,7 +204,33 @@ VALUES
 (9, 9, 9.0),
 (10, 10, 10.0);
 
--- webtoon avg rating과 user token 은 잠시 스킵
+-- webtoon avg rating webtoonID 1을 제외하고는 가짜 데이터
+INSERT INTO WebtoonAvgRating (WebtoonAvgRatingID, WebtoonID, Rating)
+VALUES
+(1, 1, 8.9),
+(2, 2, 7.5),
+(3, 3, 8.2),
+(4, 4, 7.8),
+(5, 5, 8.0),
+(6, 6, 8.3),
+(7, 7, 7.9),
+(8, 8, 8.1),
+(9, 9, 7.6),
+(10, 10, 8.4);
+
+-- token hash화 해야함.
+INSERT INTO UserTokens (Token, UserID, Expiration, CreationDate)
+VALUES
+('token1', 1, '2023-12-16 16:20:34', '2023-12-09 16:20:34'),
+('token2', 2, '2023-12-17 16:20:34', '2023-12-10 16:20:34'),
+('token3', 3, '2023-12-18 16:20:34', '2023-12-11 16:20:34'),
+('token4', 4, '2023-12-19 16:20:34', '2023-12-12 16:20:34'),
+('token5', 5, '2023-12-20 16:20:34', '2023-12-13 16:20:34'),
+('token6', 6, '2023-12-21 16:20:34', '2023-12-14 16:20:34'),
+('token7', 7, '2023-12-22 16:20:34', '2023-12-15 16:20:34'),
+('token8', 8, '2023-12-23 16:20:34', '2023-12-16 16:20:34'),
+('token9', 9, '2023-12-24 16:20:34', '2023-12-17 16:20:34'),
+('token10', 10, '2023-12-25 16:20:34', '2023-12-18 16:20:34');
 
 INSERT INTO ReaderSearch (ReaderSearchID, ReaderID, CreationDate, SearchKeyword)
 VALUES
@@ -326,7 +352,7 @@ VALUES
 (20, 20, 10, 'Good');
 
 
--- 그저 예쁜 merger를 위한 꼼수
+-- 그저 예쁜 merge를 위한 꼼수
 
 INSERT INTO Genres (GenreID, Name, Description)
 VALUES
