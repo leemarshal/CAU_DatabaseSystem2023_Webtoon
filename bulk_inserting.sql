@@ -43,18 +43,18 @@ VALUES
 (9, 9000),
 (10, 10000);
 
-INSERT INTO Webtoons (WebtoonID, Title, AuthorID, PublishDate, ThumbnailURL)
+INSERT INTO Webtoons (WebtoonID, Title, AuthorID, PublishDate, PublishDay, ThumbnailURL)
 VALUES
-(1, '선천적 얼간이들', 1, '2023-01-01', 'https://image-comic.pstatic.net/webtoon/478261/thumbnail/thumbnail_IMAG21_7fbd8610-0a97-40e3-9c63-101ea07fc4b4.jpg'),
-(2, '신혼일기', 2, '2023-01-02', 'https://image-comic.pstatic.net/webtoon/812354/thumbnail/thumbnail_IMAG21_f391c11a-9a74-4e0c-b601-2fcebafffd07.jpg'),
-(3, 'Webtoon Title 3', 3, '2023-01-03', 'https://example.com/thumbnail3.jpg'),
-(4, 'Webtoon Title 4', 4, '2023-01-04', 'https://example.com/thumbnail4.jpg'),
-(5, 'Webtoon Title 5', 5, '2023-01-05', 'https://example.com/thumbnail5.jpg'),
-(6, 'Webtoon Title 6', 6, '2023-01-06', 'https://example.com/thumbnail6.jpg'),
-(7, 'Webtoon Title 7', 7, '2023-01-07', 'https://example.com/thumbnail7.jpg'),
-(8, 'Webtoon Title 8', 8, '2023-01-08', 'https://example.com/thumbnail8.jpg'),
-(9, 'Webtoon Title 9', 9, '2023-01-09', 'https://example.com/thumbnail9.jpg'),
-(10, 'Webtoon Title 10', 10, '2023-01-10', 'https://example.com/thumbnail10.jpg');
+(1, '선천적 얼간이들', 1, '2023-01-01', 0, 'https://image-comic.pstatic.net/webtoon/478261/thumbnail/thumbnail_IMAG21_7fbd8610-0a97-40e3-9c63-101ea07fc4b4.jpg'),
+(2, '신혼일기', 2, '2023-01-02', 0, 'https://image-comic.pstatic.net/webtoon/812354/thumbnail/thumbnail_IMAG21_f391c11a-9a74-4e0c-b601-2fcebafffd07.jpg'),
+(3, 'Webtoon Title 3', 3, '2023-01-03', 1, 'https://example.com/thumbnail3.jpg'),
+(4, 'Webtoon Title 4', 4, '2023-01-04', 1, 'https://example.com/thumbnail4.jpg'),
+(5, 'Webtoon Title 5', 5, '2023-01-05', 2, 'https://example.com/thumbnail5.jpg'),
+(6, 'Webtoon Title 6', 6, '2023-01-06', 3, 'https://example.com/thumbnail6.jpg'),
+(7, 'Webtoon Title 7', 7, '2023-01-07', 3, 'https://example.com/thumbnail7.jpg'),
+(8, 'Webtoon Title 8', 8, '2023-01-08', 4, 'https://example.com/thumbnail8.jpg'),
+(9, 'Webtoon Title 9', 9, '2023-01-09', 5, 'https://example.com/thumbnail9.jpg'),
+(10, 'Webtoon Title 10', 10, '2023-01-10', 6, 'https://example.com/thumbnail10.jpg');
 
 INSERT INTO WebtoonStatus (WebtoonID, Status)
 VALUES
