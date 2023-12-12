@@ -6,29 +6,46 @@ import { PrismaClient } from "@prisma/client";
 import { userFromToken } from "@/func/userFromToken";
 import { getCookie } from "cookies-next";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Cookie() {
   const TOOLBAR_HEIGHT = 70;
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedItemPrice, setSelectedItemPrice] = useState(0);
+  const [selectedItem, setSelectedItem] = useState<{
+    cookies: number;
+    price: number;
+    desc: string;
+  } | null>(null);
   const [userCookieBalance, setUserCookieBalance] = useState<number | null>(
     null
   );
-  const prisma = new PrismaClient();
-  const token = getCookie("token");
+  const router = useRouter();
 
-  const onClick = (price: number) => {
-    //todo: 여기에 결제 붙이시면 됩니다
-    setSelectedItemPrice(price);
-    setDialogOpen(true);
+  const onClick = async (item: {
+    cookies: number;
+    price: number;
+    desc: string;
+  }) => {
+    try {
+      await axios.post("/api/cookie", item);
+      setSelectedItem(item);
+      fetchCookieBalance();
+      setDialogOpen(true);
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        alert(e.message + e.response?.data);
+      }
+    }
+  };
+
+  const fetchCookieBalance = async () => {
+    setUserCookieBalance(null);
+    const cookie = await axios.get("/api/cookie");
+    setUserCookieBalance(Number(cookie.data));
   };
 
   useEffect(() => {
-    async function fetch() {
-      const cookie = await axios.get("/api/cookie");
-      setUserCookieBalance(Number(cookie.data));
-    }
-    fetch();
+    fetchCookieBalance();
   }, []);
 
   const dummyButtons = [
@@ -63,7 +80,7 @@ export default function Cookie() {
             cookies={item.cookies}
             price={item.price}
             desc={item.desc}
-            onClick={() => onClick(item.price)}
+            onClick={() => onClick(item)}
           />
         ))}
       </div>
@@ -98,7 +115,7 @@ export default function Cookie() {
           onClick={(e) => e.stopPropagation()}
         >
           <div style={{ textAlign: "center", marginTop: 35, fontSize: 18 }}>
-            {selectedItemPrice}원 결제되었습니다!
+            {selectedItem?.price}원 결제되었습니다!
           </div>
         </div>
       </div>

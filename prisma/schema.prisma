@@ -157,7 +157,7 @@ model ReaderBookmark {
 }
 
 model ReaderCookiePurchases {
-  ReaderCookiePurchaseID Int                   @id
+  ReaderCookiePurchaseID Int                   @id @default(autoincrement())
   ReaderID               Int?
   Amount                 Int?
   Date                   DateTime?             @db.Date
