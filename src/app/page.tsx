@@ -6,6 +6,7 @@ import VerticalComicList from "./home/components/VerticalComicList";
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
 import { Sql } from "@prisma/client/runtime/library";
+import { userFromToken } from "@/func/userFromToken";
 
 export default async function Page() {
   const TOOLBAR_HEIGHT = 70;
@@ -21,21 +22,10 @@ export default async function Page() {
   const prisma = new PrismaClient();
   const webtoons = await prisma.webtoons.findMany();
 
-  const token = cookies().get("token");
   let user;
-  if (token?.value) {
-    const session = await prisma.userTokens.findFirst({
-      where: {
-        Token: token.value,
-      },
-    });
-    if (session?.UserID) {
-      user = await prisma.users.findFirst({
-        where: {
-          UserID: session?.UserID,
-        },
-      });
-    }
+  const token = cookies().get("token");
+  if (token) {
+    user = await userFromToken(token.value);
   }
 
   return (
