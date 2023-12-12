@@ -5,13 +5,12 @@ import { cookies } from "next/headers";
 
 export async function logout(token: string) {
   const prisma = new PrismaClient();
-  if (token) {
+  try {
     await prisma.userTokens.delete({
       where: {
         Token: token,
       },
     });
-    cookies().delete("token");
-  }
+  } catch (e) {}
   prisma.$disconnect();
 }

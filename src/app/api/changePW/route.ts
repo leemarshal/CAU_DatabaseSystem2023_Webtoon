@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   if (!user) return NextResponse.json("Invalid Session", { status: 403 });
 
   const prisma = new PrismaClient();
-  prisma.users.update({
+  await prisma.users.update({
     where: {
       UserID: user.UserID,
     },

@@ -1,3 +1,4 @@
+"use server";
 import React from "react";
 import ToolBar from "./home/components/ToolBar";
 import SectionTitleBar from "./home/components/SectionTitleBar";
@@ -5,7 +6,6 @@ import HorizontalComicList from "./home/components/HorizontalComicList";
 import VerticalComicList from "./home/components/VerticalComicList";
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
-import { Sql } from "@prisma/client/runtime/library";
 import { userFromToken } from "@/func/userFromToken";
 
 export default async function Page() {
@@ -22,8 +22,8 @@ export default async function Page() {
   const prisma = new PrismaClient();
   const webtoons = await prisma.webtoons.findMany();
 
-  let user;
-  const token = cookies().get("token");
+  let user, token;
+  token = cookies().get("token");
   if (token) {
     user = await userFromToken(token.value);
   }

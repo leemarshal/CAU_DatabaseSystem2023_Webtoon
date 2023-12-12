@@ -1,6 +1,7 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
+import { logout } from "./logout";
 
 export async function userFromToken(token: string) {
   const prisma = new PrismaClient();
@@ -9,7 +10,10 @@ export async function userFromToken(token: string) {
       Token: token,
     },
   });
-  if (!session?.UserID) return undefined;
+  if (!session?.UserID) {
+    await logout(token);
+    return undefined;
+  }
   const user = await prisma.users.findFirst({
     where: {
       UserID: session.UserID,
