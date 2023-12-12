@@ -44,7 +44,7 @@ CREATE TABLE Webtoons (
 CREATE TABLE WebtoonStatus (
     WebtoonID INT PRIMARY KEY,
     Status ENUM('Ongoing', 'Completed'),
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID)
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE
 );
 
 CREATE TABLE Users (
@@ -89,7 +89,7 @@ CREATE TABLE AuthorsWebtoons (
     AuthorWebtoonID INT PRIMARY KEY,
     WebtoonID INT,
     AuthorID INT,
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
     FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
     -- AuthorID is assumed to be a FK to Users table, ensure Users table is created with UserID.
 );
@@ -101,7 +101,7 @@ CREATE TABLE Episodes (
     ReleaseDate DATE,
     ThumbnailURL VARCHAR(255),
     EpisodeIndex INT,
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
     UNIQUE (WebtoonID, EpisodeIndex)
 );
 
@@ -109,8 +109,7 @@ CREATE TABLE EpisodesMedia (
     EpisodeMediaID INT PRIMARY KEY,
     EpisodeID INT,
     MediaURL VARCHAR(255),
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID)
-    -- This table assumes each media URL is unique to an EpisodeMediaID.
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE
 );
 
 CREATE TABLE EpisodesImage (
@@ -118,7 +117,7 @@ CREATE TABLE EpisodesImage (
     EpisodeID INT,
     CutNumber INT,
     ImageURL VARCHAR(255),
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
     UNIQUE (EpisodeID, CutNumber)
 );
 
@@ -129,7 +128,7 @@ CREATE TABLE EpisodesDialogue (
     AuthorID INT,
     DialogueText VARCHAR(255),
     Timestamp TIMESTAMP,
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
     FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
     -- Assuming the Authors table has AuthorID as a primary key.
 );
@@ -139,7 +138,7 @@ CREATE TABLE EpisodeRating (
     EpisodeID INT,
     ReaderID INT,
     Rating TINYINT CHECK (Rating >= 1 AND Rating <= 10),
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
     -- ReaderID is assumed to be a FK to Users table.
 );
@@ -148,14 +147,14 @@ CREATE TABLE EpisodeAvgRating (
     EpisodeAvgRatingID INT PRIMARY KEY,
     EpisodeID INT,
     Rating DECIMAL(3,1) CHECK (Rating >= 1 AND Rating <= 10),
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID)
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE
 );
 
 CREATE TABLE WebtoonAvgRating (
     WebtoonAvgRatingID INT PRIMARY KEY,
     WebtoonID INT,
     Rating DECIMAL(3,1) CHECK (Rating >= 1 AND Rating <= 10),
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID)
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE
 );
 
 CREATE TABLE UserTokens (
@@ -211,7 +210,7 @@ CREATE TABLE ReaderBookmark (
     EpisodeID INT,
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
     FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID),
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
     UNIQUE (ReaderID, WebtoonID)
     -- This UNIQUE constraint ensures that the combination of ReaderID and WebtoonID is unique.
     -- Assumes the existence of the Webtoons and Episodes tables with WebtoonID and EpisodeID as PKs.
@@ -223,7 +222,7 @@ CREATE TABLE Reading (
     EpisodeID INT,
     ReadDate DATE,
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID)
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE
     -- Assumes the existence of the Readers and Episodes tables.
 );
 
@@ -234,7 +233,7 @@ CREATE TABLE Comments (
     CommentText VARCHAR(255),
     Timestamp TIMESTAMP,
     ParentCommentID INT DEFAULT -1,
-    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
     -- ParentCommentID is set to -1 by default when there is no parent comment (non-reply comments).
 );
@@ -245,7 +244,7 @@ CREATE TABLE CommentsLikes (
     CommentID INT,
     LikeType ENUM('Good', 'Bad'),
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
-    FOREIGN KEY (CommentID) REFERENCES Comments(CommentID),
+    FOREIGN KEY (CommentID) REFERENCES Comments(CommentID) ON DELETE CASCADE,
     UNIQUE (ReaderID, CommentID)
 );
 
@@ -261,7 +260,7 @@ CREATE TABLE WebtoonGenres (
     WebtoonID INT,
     GenreID INT,
     PRIMARY KEY (WebtoonID, GenreID),
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
     FOREIGN KEY (GenreID) REFERENCES Genres(GenreID)
     -- This table creates a many-to-many relationship between Webtoons and Genres.
     -- The primary key is a composite key consisting of WebtoonID and GenreID.
@@ -271,7 +270,7 @@ CREATE TABLE WebtoonTags (
     WebtoonTagID INT PRIMARY KEY,
     WebtoonID INT,
     TagID INT,
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
     FOREIGN KEY (TagID) REFERENCES Tags(TagID)
     -- This table links Webtoons to Tags.
 );
@@ -301,7 +300,7 @@ CREATE TABLE Subscriptions (
     SubscriptionDate DATE,
     PRIMARY KEY (ReaderID, WebtoonID),
     FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
-    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID)
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE
     -- By using ReaderID and WebtoonID as a composite primary key,
     -- this table now allows a reader to subscribe to multiple webtoons
     -- and ensures that each subscription is unique to a reader-webtoon pair.
