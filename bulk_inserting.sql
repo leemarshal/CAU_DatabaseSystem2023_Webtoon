@@ -1,28 +1,32 @@
-INSERT INTO Users (UserID, Username, Email, PasswordHash, UserType, Gender, DateOfBirth, JoinDate)
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, isActive)
 VALUES
-(1, 'username1', 'user1@example.com', 'hash1', 'Author', 'Male', '1990-01-01', '2020-01-01'),
-(2, 'username2', 'user2@example.com', 'hash2', 'Author', 'Female', '1991-02-01', '2020-02-01'),
-(3, 'username3', 'user3@example.com', 'hash3', 'Author', 'Male', '1992-03-01', '2020-03-01'),
-(4, 'username4', 'user4@example.com', 'hash4', 'Author', 'Female', '1993-04-01', '2020-04-01'),
-(5, 'username5', 'user5@example.com', 'hash5', 'Author', 'Male', '1994-05-01', '2020-05-01'),
-(6, 'username6', 'user6@example.com', 'hash6', 'Author', 'Female', '1995-06-01', '2020-06-01'),
-(7, 'username7', 'user7@example.com', 'hash7', 'Author', 'Male', '1996-07-01', '2020-07-01'),
-(8, 'username8', 'user8@example.com', 'hash8', 'Author', 'Female', '1997-08-01', '2020-08-01'),
-(9, 'username9', 'user9@example.com', 'hash9', 'Author', 'Male', '1998-09-01', '2020-09-01'),
-(10, 'username10', 'user10@example.com', 'hash10', 'Author', 'Female', '1999-10-01', '2020-10-01');
+(1, 'username1', 'user1@example.com', 'hash1', 'Male', '1990-01-01', '2020-01-01', TRUE),
+(2, 'username2', 'user2@example.com', 'hash2', 'Female', '1991-02-01', '2020-02-01', TRUE),
+(3, 'username3', 'user3@example.com', 'hash3', 'Male', '1992-03-01', '2020-03-01', TRUE),
+(4, 'username4', 'user4@example.com', 'hash4', 'Female', '1993-04-01', '2020-04-01', TRUE),
+(5, 'username5', 'user5@example.com', 'hash5', 'Male', '1994-05-01', '2020-05-01', TRUE),
+(6, 'username6', 'user6@example.com', 'hash6', 'Female', '1995-06-01', '2020-06-01', TRUE),
+(7, 'username7', 'user7@example.com', 'hash7', 'Male', '1996-07-01', '2020-07-01', TRUE),
+(8, 'username8', 'user8@example.com', 'hash8', 'Female', '1997-08-01', '2020-08-01', TRUE),
+(9, 'username9', 'user9@example.com', 'hash9', 'Male', '1998-09-01', '2020-09-01', TRUE),
+(10, 'username10', 'user10@example.com', 'hash10', 'Female', '1999-10-01', '2020-10-01', TRUE);
 
-INSERT INTO Users (UserID, Username, Email, PasswordHash, UserType, Gender, DateOfBirth, JoinDate)
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, isActive)
 VALUES
-(11, 'reader1', 'reader1@example.com', 'hash11', 'Reader', 'Male', '1990-11-01', '2020-11-01'),
-(12, 'reader2', 'reader2@example.com', 'hash12', 'Reader', 'Female', '1991-12-01', '2020-12-01'),
-(13, 'reader3', 'reader3@example.com', 'hash13', 'Reader', 'Male', '1992-01-13', '2021-01-13'),
-(14, 'reader4', 'reader4@example.com', 'hash14', 'Reader', 'Female', '1993-02-14', '2021-02-14'),
-(15, 'reader5', 'reader5@example.com', 'hash15', 'Reader', 'Male', '1994-03-15', '2021-03-15'),
-(16, 'reader6', 'reader6@example.com', 'hash16', 'Reader', 'Female', '1995-04-16', '2021-04-16'),
-(17, 'reader7', 'reader7@example.com', 'hash17', 'Reader', 'Male', '1996-05-17', '2021-05-17'),
-(18, 'reader8', 'reader8@example.com', 'hash18', 'Reader', 'Female', '1997-06-18', '2021-06-18'),
-(19, 'reader9', 'reader9@example.com', 'hash19', 'Reader', 'Male', '1998-07-19', '2021-07-19'),
-(20, 'reader10', 'reader10@example.com', 'hash20', 'Reader', 'Female', '1999-08-20', '2021-08-20');
+(11, 'reader1', 'reader1@example.com', 'hash11', 'Male', '1990-11-01', '2020-11-01', TRUE),
+(12, 'reader2', 'reader2@example.com', 'hash12', 'Female', '1991-12-01', '2020-12-01', TRUE),
+(13, 'reader3', 'reader3@example.com', 'hash13', 'Male', '1992-01-13', '2021-01-13', TRUE),
+(14, 'reader4', 'reader4@example.com', 'hash14', 'Female', '1993-02-14', '2021-02-14', TRUE),
+(15, 'reader5', 'reader5@example.com', 'hash15', 'Male', '1994-03-15', '2021-03-15', TRUE),
+(16, 'reader6', 'reader6@example.com', 'hash16', 'Female', '1995-04-16', '2021-04-16', TRUE),
+(17, 'reader7', 'reader7@example.com', 'hash17', 'Male', '1996-05-17', '2021-05-17', TRUE),
+(18, 'reader8', 'reader8@example.com', 'hash18', 'Female', '1997-06-18', '2021-06-18', TRUE),
+(19, 'reader9', 'reader9@example.com', 'hash19', 'Male', '1998-07-19', '2021-07-19', TRUE),
+(20, 'reader10', 'reader10@example.com', 'hash20', 'Female', '1999-08-20', '2021-08-20', TRUE);
+
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, isActive)
+VALUES
+(777, 'admin777', 'admin777@example.com', 'hash777', 'Male', '1990-11-01', '2020-11-01', TRUE);
 
 -- hash 값은 수정 필요
 
@@ -78,18 +82,18 @@ VALUES
 (9, '소설원작', '소설을 원작으로 하는 웹툰'),
 (10, '먼치킨', '주인공이 압도적인 능력을 가지고 스토리를 이끌어가는 장르');
 
-INSERT INTO Readers (ReaderID, CookieAmount, IsActive)
+INSERT INTO Readers (ReaderID, CookieAmount)
 VALUES
-(11, 100, TRUE),
-(12, 150, TRUE),
-(13, 200, TRUE),
-(14, 250, TRUE),
-(15, 300, TRUE),
-(16, 350, TRUE),
-(17, 400, TRUE),
-(18, 450, TRUE),
-(19, 500, FALSE),
-(20, 550, FALSE);
+(11, 100),
+(12, 150),
+(13, 200),
+(14, 250),
+(15, 300),
+(16, 350),
+(17, 400),
+(18, 450),
+(19, 500),
+(20, 550);
 
 INSERT INTO AuthorsWebtoons (AuthorWebtoonID, WebtoonID, AuthorID)
 VALUES
@@ -382,16 +386,16 @@ INSERT INTO WebtoonTags (WebtoonTagID, WebtoonID, TagID) VALUES
 (10, 10, 6);
 
 INSERT INTO Notice (NoticeID, Title, Content, PostedDate, IsActive) VALUES
-(1, 'Important Update', 'We have an important update for our users.', '2023-01-01', 'True'),
-(2, 'New Webtoon Release', 'Check out our latest webtoon release!', '2023-02-15', 'True'),
-(3, 'Maintenance Notice', 'Scheduled maintenance on our platform.', '2023-03-10', 'True'),
-(4, 'Upcoming Event', 'Get ready for our upcoming event!', '2023-04-05', 'True'),
-(5, 'System Upgrade', 'Our system will undergo an upgrade this weekend.', '2023-05-20', 'True'),
-(6, 'Holiday Closure', 'Our services will be closed for the holiday.', '2023-07-01', 'True'),
-(7, 'Community Poll', 'Share your thoughts in our community poll!', '2023-08-10', 'True'),
-(8, 'Bug Fix', 'We have fixed several bugs on our platform.', '2023-09-15', 'True'),
-(9, 'New Feature Announcement', 'Exciting new features are coming soon!', '2023-10-10', 'True'),
-(10, 'Thank You for Your Support', 'We appreciate your continued support!', '2023-12-01', 'True');
+(1, 'Important Update', 'We have an important update for our users.', '2023-01-01', TRUE),
+(2, 'New Webtoon Release', 'Check out our latest webtoon release!', '2023-02-15', TRUE),
+(3, 'Maintenance Notice', 'Scheduled maintenance on our platform.', '2023-03-10', TRUE),
+(4, 'Upcoming Event', 'Get ready for our upcoming event!', '2023-04-05', TRUE),
+(5, 'System Upgrade', 'Our system will undergo an upgrade this weekend.', '2023-05-20', TRUE),
+(6, 'Holiday Closure', 'Our services will be closed for the holiday.', '2023-07-01', TRUE),
+(7, 'Community Poll', 'Share your thoughts in our community poll!', '2023-08-10', TRUE),
+(8, 'Bug Fix', 'We have fixed several bugs on our platform.', '2023-09-15', TRUE),
+(9, 'New Feature Announcement', 'Exciting new features are coming soon!', '2023-10-10', TRUE),
+(10, 'Thank You for Your Support', 'We appreciate your continued support!', '2023-12-01', TRUE);
 
 INSERT INTO UserNoticeRead (ReaderID, NoticeID) VALUES
 (11, 1),
