@@ -183,15 +183,14 @@ CREATE TABLE ReaderPaymentMethods (
 );
 
 CREATE TABLE ReaderCookiePurchases (
-    ReaderCookiePurchaseID INT PRIMARY KEY,
+    ReaderCookiePurchaseID INT AUTO_INCREMENT PRIMARY KEY,
     ReaderID INT,
     Amount INT,
     Date DATE,
     ReaderPaymentMethodID INT,
-    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
-    FOREIGN KEY (ReaderPaymentMethodID) REFERENCES ReaderPaymentMethods(ReaderPaymentMethodID)
-    -- Assumes the existence of the ReaderPaymentMethods table with ReaderPaymentMethodID as PK.
-    -- Note: The FK to User-Payment Methods should be an INT if it's referencing an ID.
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
+    -- ReaderPaymentMethodID에 대한 외래 키(FK)는 ReaderPaymentMethods 테이블의 ReaderPaymentMethodID를 참조한다고 가정
+    -- ReaderPaymentMethodID가 INT 타입인 경우, User-Payment Methods에 대한 외래 키도 INT 타입이어야 함
 );
 
 CREATE TABLE ReaderCookieUse (
