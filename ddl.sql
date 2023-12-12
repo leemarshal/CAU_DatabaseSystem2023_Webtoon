@@ -281,8 +281,6 @@ CREATE TABLE Notice (
     Title VARCHAR(255),
     Content VARCHAR(255),
     PostedDate DATE,
-    AdminID INT,
-    FOREIGN KEY (AdminID) REFERENCES Administrator(AdministratorID),
     IsActive BOOLEAN
     -- IsActive is an ENUM to ensure it only contains 'True' or 'False'.
 );
