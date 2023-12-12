@@ -36,7 +36,8 @@ CREATE TABLE Webtoons (
     Title VARCHAR(255),
     AuthorID INT,
     PublishDate DATE,
-    ThumbnailURL VARCHAR(255)
+    ThumbnailURL VARCHAR(255),
+    PublishDay INT CHECK (PublishDay >= 0 AND PublishDay <= 6)  -- 0: 일요일, 1: 월요일, ..., 6: 토요일
     -- 다른 속성이 있다면 추가하십시오.
 );
 
