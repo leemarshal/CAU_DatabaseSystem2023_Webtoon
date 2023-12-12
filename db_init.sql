@@ -1,3 +1,318 @@
+DROP TABLE IF EXISTS AuthorsWebtoons;
+DROP TABLE IF EXISTS EpisodesWebtoon;
+DROP TABLE IF EXISTS EpisodesMedia;
+DROP TABLE IF EXISTS EpisodesImage;
+DROP TABLE IF EXISTS EpisodesDialogue;
+DROP TABLE IF EXISTS EpisodeRating;
+DROP TABLE IF EXISTS EpisodeAvgRating;
+DROP TABLE IF EXISTS WebtoonAvgRating;
+DROP TABLE IF EXISTS UserTokens;
+DROP TABLE IF EXISTS ReaderSearch;
+DROP TABLE IF EXISTS ReaderCookiePurchases;
+DROP TABLE IF EXISTS ReaderPaymentMethods;
+DROP TABLE IF EXISTS ReaderCookieUse;
+DROP TABLE IF EXISTS ReaderBookmark;
+DROP TABLE IF EXISTS Reading;
+DROP TABLE IF EXISTS CommentsLikes;
+DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS WebtoonGenres;
+DROP TABLE IF EXISTS WebtoonTags;
+DROP TABLE IF EXISTS UserNoticeRead;
+DROP TABLE IF EXISTS Subscriptions;
+DROP TABLE IF EXISTS WebtoonStatus;
+DROP TABLE IF EXISTS Readers;
+DROP TABLE IF EXISTS Authors;
+DROP TABLE IF EXISTS Administrator;
+DROP TABLE IF EXISTS Episodes;
+DROP TABLE IF EXISTS Webtoons;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Tags;
+DROP TABLE IF EXISTS Genres;
+DROP TABLE IF EXISTS Notice;
+DROP TABLE IF EXISTS PromotionEvent;
+
+CREATE TABLE Webtoons (
+    WebtoonID INT PRIMARY KEY,
+    Title VARCHAR(255),
+    AuthorID INT,
+    PublishDate DATE,
+    ThumbnailURL VARCHAR(255),
+    PublishDay INT CHECK (PublishDay >= 0 AND PublishDay <= 6)  -- 0: 일요일, 1: 월요일, ..., 6: 토요일
+    -- 다른 속성이 있다면 추가하십시오.
+);
+
+CREATE TABLE WebtoonStatus (
+    WebtoonID INT PRIMARY KEY,
+    Status ENUM('Ongoing', 'Completed'),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE
+);
+
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY,
+    Username VARCHAR(255),
+    Email VARCHAR(255),
+    PasswordHash VARCHAR(255),
+    Gender VARCHAR(50),
+    IsActive BOOLEAN,
+    DateOfBirth DATE,
+    JoinDate DATE
+    -- 추가 속성이 있다면 여기에 삽입하십시오.
+);
+
+CREATE TABLE Authors (
+    AuthorID INT PRIMARY KEY,
+    Salary INT,
+    FOREIGN KEY (AuthorID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Tags (
+    TagID INT PRIMARY KEY,
+    TagName VARCHAR(255),
+    TagDescription VARCHAR(255)
+    -- TagName and TagDescription VARCHAR lengths can be adjusted as needed.
+);
+
+CREATE TABLE Readers (
+    ReaderID INT PRIMARY KEY,
+    CookieAmount INT,
+    FOREIGN KEY (ReaderID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Administrator (
+    AdministratorID INT PRIMARY KEY,
+    Salary int,
+    Level int,
+    FOREIGN KEY (AdministratorID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE AuthorsWebtoons (
+    AuthorWebtoonID INT PRIMARY KEY,
+    WebtoonID INT,
+    AuthorID INT,
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+    -- AuthorID is assumed to be a FK to Users table, ensure Users table is created with UserID.
+);
+
+CREATE TABLE Episodes (
+    EpisodeID INT PRIMARY KEY,
+    WebtoonID INT,
+    Title VARCHAR(255),
+    ReleaseDate DATE,
+    ThumbnailURL VARCHAR(255),
+    EpisodeIndex INT,
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
+    UNIQUE (WebtoonID, EpisodeIndex)
+);
+
+CREATE TABLE EpisodesMedia (
+    EpisodeMediaID INT PRIMARY KEY,
+    EpisodeID INT,
+    MediaURL VARCHAR(255),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE
+);
+
+CREATE TABLE EpisodesImage (
+    EpisodeImageID INT PRIMARY KEY,
+    EpisodeID INT,
+    CutNumber INT,
+    ImageURL VARCHAR(255),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
+    UNIQUE (EpisodeID, CutNumber)
+);
+
+
+CREATE TABLE EpisodesDialogue (
+    DialogueID INT PRIMARY KEY,
+    EpisodeID INT,
+    AuthorID INT,
+    DialogueText VARCHAR(255),
+    Timestamp TIMESTAMP,
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+    -- Assuming the Authors table has AuthorID as a primary key.
+);
+
+CREATE TABLE EpisodeRating (
+    EpisodeRatingID INT PRIMARY KEY,
+    EpisodeID INT,
+    ReaderID INT,
+    Rating TINYINT CHECK (Rating >= 1 AND Rating <= 10),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
+    -- ReaderID is assumed to be a FK to Users table.
+);
+
+CREATE TABLE EpisodeAvgRating (
+    EpisodeAvgRatingID INT PRIMARY KEY,
+    EpisodeID INT,
+    Rating DECIMAL(3,1) CHECK (Rating >= 1 AND Rating <= 10),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE
+);
+
+CREATE TABLE WebtoonAvgRating (
+    WebtoonAvgRatingID INT PRIMARY KEY,
+    WebtoonID INT,
+    Rating DECIMAL(3,1) CHECK (Rating >= 1 AND Rating <= 10),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE
+);
+
+CREATE TABLE UserTokens (
+    Token VARCHAR(255) PRIMARY KEY,
+    UserID INT,
+    Expiration DATETIME,
+    CreationDate DATETIME,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE ReaderSearch (
+    ReaderSearchID INT PRIMARY KEY,
+    ReaderID INT,
+    CreationDate DATETIME,
+    SearchKeyword VARCHAR(255),
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
+    -- Assumes the existence of the Readers table with ReaderID as PK.
+);
+
+CREATE TABLE ReaderPaymentMethods (
+    ReaderPaymentMethodID INT PRIMARY KEY,
+    ReaderID INT,
+    PaymentMethodDetails VARCHAR(255),
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
+    -- Assumes the existence of the Readers table with ReaderID as PK.
+);
+
+CREATE TABLE ReaderCookiePurchases (
+    ReaderCookiePurchaseID INT AUTO_INCREMENT PRIMARY KEY,
+    ReaderID INT,
+    Amount INT,
+    Date DATE,
+    ReaderPaymentMethodID INT,
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
+    -- ReaderPaymentMethodID에 대한 외래 키(FK)는 ReaderPaymentMethods 테이블의 ReaderPaymentMethodID를 참조한다고 가정
+    -- ReaderPaymentMethodID가 INT 타입인 경우, User-Payment Methods에 대한 외래 키도 INT 타입이어야 함
+);
+
+CREATE TABLE ReaderCookieUse (
+    ReaderCookieUseID INT PRIMARY KEY,
+    ReaderID INT,
+    Amount INT,
+    Date DATE,
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
+    -- Assumes the existence of the Readers table with ReaderID as PK.
+);
+
+CREATE TABLE ReaderBookmark (
+    ReaderBookmarkID INT PRIMARY KEY,
+    ReaderID INT,
+    WebtoonID INT,
+    EpisodeID INT,
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
+    UNIQUE (ReaderID, WebtoonID)
+    -- This UNIQUE constraint ensures that the combination of ReaderID and WebtoonID is unique.
+    -- Assumes the existence of the Webtoons and Episodes tables with WebtoonID and EpisodeID as PKs.
+);
+
+CREATE TABLE Reading (
+    ReadingID INT PRIMARY KEY,
+    ReaderID INT,
+    EpisodeID INT,
+    ReadDate DATE,
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE
+    -- Assumes the existence of the Readers and Episodes tables.
+);
+
+CREATE TABLE Comments (
+    CommentID INT PRIMARY KEY,
+    EpisodeID INT,
+    ReaderID INT,
+    CommentText VARCHAR(255),
+    Timestamp TIMESTAMP,
+    ParentCommentID INT DEFAULT -1,
+    FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
+    -- ParentCommentID is set to -1 by default when there is no parent comment (non-reply comments).
+);
+
+CREATE TABLE CommentsLikes (
+    LikeID INT PRIMARY KEY,
+    ReaderID INT,
+    CommentID INT,
+    LikeType ENUM('Good', 'Bad'),
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
+    FOREIGN KEY (CommentID) REFERENCES Comments(CommentID) ON DELETE CASCADE,
+    UNIQUE (ReaderID, CommentID)
+);
+
+
+CREATE TABLE Genres (
+    GenreID INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Description VARCHAR(255)
+    -- Description can contain a longer text explaining the genre.
+);
+
+CREATE TABLE WebtoonGenres (
+    WebtoonID INT,
+    GenreID INT,
+    PRIMARY KEY (WebtoonID, GenreID),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
+    FOREIGN KEY (GenreID) REFERENCES Genres(GenreID)
+    -- This table creates a many-to-many relationship between Webtoons and Genres.
+    -- The primary key is a composite key consisting of WebtoonID and GenreID.
+);
+
+CREATE TABLE WebtoonTags (
+    WebtoonTagID INT PRIMARY KEY,
+    WebtoonID INT,
+    TagID INT,
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE,
+    FOREIGN KEY (TagID) REFERENCES Tags(TagID)
+    -- This table links Webtoons to Tags.
+);
+
+CREATE TABLE Notice (
+    NoticeID INT PRIMARY KEY,
+    Title VARCHAR(255),
+    Content VARCHAR(255),
+    PostedDate DATE,
+    IsActive BOOLEAN
+    -- IsActive is an ENUM to ensure it only contains 'True' or 'False'.
+);
+
+CREATE TABLE UserNoticeRead (
+    ReaderID INT,
+    NoticeID INT,
+    PRIMARY KEY (ReaderID, NoticeID),
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
+    FOREIGN KEY (NoticeID) REFERENCES Notice(NoticeID)
+    -- This table records which users have read which notices.
+    -- The combination of ReaderID and NoticeID is unique.
+);
+
+CREATE TABLE Subscriptions (
+    ReaderID INT,
+    WebtoonID INT,
+    SubscriptionDate DATE,
+    PRIMARY KEY (ReaderID, WebtoonID),
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
+    FOREIGN KEY (WebtoonID) REFERENCES Webtoons(WebtoonID) ON DELETE CASCADE
+    -- By using ReaderID and WebtoonID as a composite primary key,
+    -- this table now allows a reader to subscribe to multiple webtoons
+    -- and ensures that each subscription is unique to a reader-webtoon pair.
+);
+
+CREATE TABLE PromotionEvent (
+    event_id INT PRIMARY KEY,
+    start_date DATE,
+    end_date DATE,
+    event_title VARCHAR(255),
+    cookie_discount_rate INT
+);
+
 INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, IsActive)
 VALUES
 (1, 'username1', 'user1@example.com', 'hash1', 'Male', '1990-01-01', '2020-01-01', TRUE),
@@ -432,3 +747,244 @@ INSERT INTO PromotionEvent (event_id, start_date, end_date, event_title, cookie_
 (8, '2023-09-10', '2023-09-30', 'Fall Frenzy', 12),
 (9, '2023-10-05', '2023-10-20', 'Halloween Spooktacular', 25),
 (10, '2023-11-25', '2023-12-10', 'Black Friday Extravaganza', 30);
+
+DELIMITER //
+DROP FUNCTION IF EXISTS CalculateNoticeReadRatio;
+CREATE FUNCTION CalculateNoticeReadRatio(noticeID INT) RETURNS DECIMAL(5,2)
+BEGIN
+    DECLARE totalReadCount INT;
+    DECLARE noticeReadCount INT;
+    DECLARE readRatio DECIMAL(5,2);
+
+    -- 전체 사용자 수 조회
+    SELECT COUNT(DISTINCT ReaderID) INTO totalReadCount
+    FROM Readers;
+
+    -- 특정 Notice를 읽은 사용자 수 조회
+    SELECT COUNT(DISTINCT ReaderID) INTO noticeReadCount
+    FROM UserNoticeRead
+    WHERE UserNoticeRead.NoticeID = noticeID;
+
+    -- 읽은 비율 계산
+    IF totalReadCount > 0 THEN
+        SET readRatio = (noticeReadCount / totalReadCount);
+    ELSE
+        SET readRatio = 0;
+    END IF;
+
+    RETURN readRatio;
+END //
+
+DELIMITER ;
+
+DELIMITER $$
+DROP FUNCTION IF EXISTS GetMaleSubscriberRatio;
+CREATE FUNCTION GetMaleSubscriberRatio(webtoon_id INT) RETURNS DECIMAL(4,2)
+BEGIN
+    DECLARE male_count INT;
+    DECLARE total_count INT;
+    DECLARE ratio DECIMAL(5,2);
+
+    -- 남성 구독자 수 계산
+    SELECT COUNT(*)
+    INTO male_count
+    FROM Subscriptions
+    INNER JOIN Readers ON Subscriptions.ReaderID = Readers.ReaderID
+    INNER JOIN Users ON Readers.ReaderID = Users.UserID
+    WHERE Subscriptions.WebtoonID = webtoon_id AND Users.Gender = 'Male';
+
+    -- 전체 구독자 수 계산
+    SELECT COUNT(*)
+    INTO total_count
+    FROM Subscriptions
+    WHERE Subscriptions.WebtoonID = webtoon_id;
+
+    -- 전체 구독자가 없는 경우 0 반환
+    IF total_count = 0 THEN
+        RETURN 0;
+    END IF;
+
+    -- 비율 계산
+    SET ratio = (male_count / total_count);
+
+    RETURN ratio;
+END$$
+
+DELIMITER ;
+
+DELIMITER //
+DROP FUNCTION IF EXISTS CalculateReaderRemainingCookie;
+CREATE FUNCTION CalculateReaderRemainingCookie(rId INT) RETURNS INT
+BEGIN
+    DECLARE purchased INT;
+    DECLARE used INT;
+
+    SELECT sum(Amount) into purchased
+    from ReaderCookiePurchases RCP where ReaderID = rId group by ReaderID;
+
+    SELECT sum(Amount) into used
+    from ReaderCookieUse RCU where ReaderID = rId group by ReaderID;
+
+    RETURN purchased - used;
+END //
+
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS UpdateEpisodeAvgRatings;
+DELIMITER //
+
+CREATE PROCEDURE UpdateEpisodeAvgRatings(IN eId INT)
+BEGIN
+    DECLARE newRating DECIMAL(3,1);
+    DECLARE existingID INT;
+
+    -- 각 에피소드의 평균 평점 계산
+    SELECT AVG(Rating) INTO newRating
+    FROM EpisodeRating
+    WHERE EpisodeID = eId;
+
+    -- 해당 에피소드의 기존 데이터 확인
+    SELECT EpisodeAvgRatingID INTO existingID
+    FROM EpisodeAvgRating
+    WHERE EpisodeID = eId;
+
+    -- 평균 평점이 null이 아닌 경우에만 업데이트 실행
+    IF newRating IS NOT NULL THEN
+        IF existingID IS NOT NULL THEN
+            -- 기존 데이터가 있는 경우 업데이트
+            UPDATE EpisodeAvgRating
+            SET Rating = newRating
+            WHERE EpisodeID = eId;
+        ELSE
+            -- 기존 데이터가 없는 경우 새로운 행 삽입
+            INSERT INTO EpisodeAvgRating (EpisodeID, Rating)
+            VALUES (eId, newRating);
+        END IF;
+    END IF;
+END //
+
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS DeactivateReader;
+DELIMITER //
+CREATE PROCEDURE DeactivateReader(IN p_ReaderID INT)
+BEGIN
+    DECLARE IsReaderActive BOOLEAN;
+
+    -- 활성 상태 확인
+    SELECT IsActive INTO IsReaderActive FROM Users WHERE UserID = p_ReaderID;
+
+    IF IsReaderActive = False THEN
+        -- 데이터 삭제
+        DELETE FROM ReaderBookmark WHERE ReaderID = p_ReaderID;
+        DELETE FROM Subscriptions WHERE ReaderID = p_ReaderID;
+        DELETE FROM Reading WHERE ReaderID = p_ReaderID;
+        DELETE FROM ReaderSearch WHERE ReaderID = p_ReaderID;
+        DELETE FROM UserNoticeRead WHERE ReaderID = p_ReaderID;
+        DELETE FROM ReaderPaymentMethods WHERE ReaderID = p_ReaderID;
+        -- 트리거에서 실행될 프로시저. 트랜잭션 제외함.
+    END IF;
+END //
+
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS DeactivateAuthor;
+DELIMITER //
+CREATE PROCEDURE DeactivateAuthor(IN p_AuthorID INT)
+    BEGIN
+    DECLARE IsAuthorActive BOOLEAN;
+    SELECT IsActive INTO IsAuthorActive FROM Users WHERE UserID = p_AuthorID;
+    IF IsAuthorActive = False THEN
+       UPDATE Authors SET Salary = 0 WHERE AuthorID = p_AuthorID;
+    END IF;
+END //;
+DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS UpdateWebtoonAvgRatings;
+DELIMITER //
+
+CREATE PROCEDURE UpdateWebtoonAvgRatings(IN wId INT)
+BEGIN
+    declare newRating DECIMAL(5,2);
+    SELECT
+        avg(Rating) into newRating
+    FROM
+        EpisodeAvgRating
+    left join Episodes E on EpisodeAvgRating.EpisodeID = E.EpisodeID
+    where WebtoonID = wId
+    group by WebtoonID;
+    IF newRating IS NOT NULL THEN UPDATE WebtoonAvgRating SET Rating = newRating where WebtoonID = wId;
+    END IF;
+END //
+
+DELIMITER ;
+
+
+
+-- 클라이언트의 회원 탈퇴 요청을 아래와 같은 쿼리로 서버에서 처리해줘야함.
+-- UPDATE Users
+-- SET IsActive = 0,
+--     Username = ''Unknown''
+-- WHERE UserID = 11;
+--
+
+DROP TRIGGER IF EXISTS AfterReaderDeactivation;
+DELIMITER $$
+CREATE TRIGGER AfterReaderDeactivation
+AFTER UPDATE ON Users
+FOR EACH ROW
+BEGIN
+    IF OLD.IsActive <> NEW.IsActive AND NEW.IsActive = FALSE THEN
+        IF EXISTS (SELECT * FROM Readers WHERE ReaderID = NEW.UserID) THEN
+            CALL DeactivateReader(NEW.UserID);
+        END IF;
+    END IF;
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS AfterAuthorDeactivation;
+DELIMITER $$
+CREATE TRIGGER AfterAuthorDeactivation
+AFTER UPDATE ON Users
+FOR EACH ROW
+BEGIN
+    IF OLD.IsActive <> NEW.IsActive AND NEW.IsActive = FALSE THEN
+        IF EXISTS (SELECT * FROM Authors WHERE AuthorID = NEW.UserID) THEN
+            CALL DeactivateAuthor(NEW.UserID);
+        END IF;
+    END IF;
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase_INSERT;
+DELIMITER $$
+CREATE TRIGGER CookieAmountUpdatePurchase_INSERT
+AFTER INSERT ON ReaderCookiePurchases
+FOR EACH ROW
+BEGIN
+	UPDATE Readers SET CookieAmount=(SELECT CalculateReaderRemainingCookie(NEW.ReaderID)) WHERE ReaderID=NEW.ReaderID;
+END;$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase_UPDATE;
+DELIMITER $$
+CREATE TRIGGER CookieAmountUpdatePurchase_UPDATE
+AFTER UPDATE ON ReaderCookiePurchases
+FOR EACH ROW
+BEGIN
+	UPDATE Readers SET CookieAmount=(SELECT CalculateReaderRemainingCookie(NEW.ReaderID)) WHERE ReaderID=NEW.ReaderID;
+END;$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase_DELETE;
+DELIMITER $$
+CREATE TRIGGER CookieAmountUpdatePurchase_DELETE
+AFTER DELETE ON ReaderCookiePurchases
+FOR EACH ROW
+BEGIN
+	UPDATE Readers SET CookieAmount=(SELECT CalculateReaderRemainingCookie(OLD.ReaderID)) WHERE ReaderID=OLD.ReaderID;
+END;$$
+DELIMITER ;
