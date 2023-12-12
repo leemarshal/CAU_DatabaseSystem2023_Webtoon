@@ -4,7 +4,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default () => {
+export default function Home() {
   const [loginForm, setLoginForm] = useState({ id: "", pw: "" });
   const [errorMessage, setErrorMessage] = useState<undefined | string>(
     undefined
@@ -96,4 +96,4 @@ export default () => {
       </div>
     </div>
   );
-};
+}
