@@ -1,12 +1,33 @@
-DROP TRIGGER IF EXISTS AfterUserDeactivation;
+'''
+클라이언트의 회원 탈퇴 요청을 아래와 같은 쿼리로 서버에서 처리해줘야함.
+UPDATE Users
+SET IsActive = 0,
+    Username = ''Unknown''
+WHERE UserID = 11;
+'''
+DROP TRIGGER IF EXISTS AfterReaderDeactivation;
 DELIMITER $$
-CREATE TRIGGER AfterUserDeactivation
+CREATE TRIGGER AfterReaderDeactivation
 AFTER UPDATE ON Users
 FOR EACH ROW
 BEGIN
-    IF OLD.isActive <> NEW.IsActive AND NEW.IsActive = FALSE THEN
+    IF OLD.IsActive <> NEW.IsActive AND NEW.IsActive = FALSE THEN
         IF EXISTS (SELECT * FROM Readers WHERE ReaderID = NEW.UserID) THEN
             CALL DeactivateReader(NEW.UserID);
+        END IF;
+    END IF;
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS AfterAuthorDeactivation;
+DELIMITER $$
+CREATE TRIGGER AfterAuthorDeactivation
+AFTER UPDATE ON Users
+FOR EACH ROW
+BEGIN
+    IF OLD.IsActive <> NEW.IsActive AND NEW.IsActive = FALSE THEN
+        IF EXISTS (SELECT * FROM Authors WHERE AuthorID = NEW.UserID) THEN
+            CALL DeactivateAuthor(NEW.UserID);
         END IF;
     END IF;
 END$$
