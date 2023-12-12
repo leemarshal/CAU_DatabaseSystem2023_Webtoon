@@ -45,3 +45,24 @@ CREATE PROCEDURE DeactivateAuthor(IN p_AuthorID INT)
     END IF;
 END //;
 DELIMITER ;
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE UpdateWebtoonAvgRatings(IN wId INT)
+BEGIN
+    declare newRating DECIMAL(5,2);
+    SELECT
+        avg(Rating) into newRating
+    FROM
+        EpisodeAvgRating
+    left join Episodes E on EpisodeAvgRating.EpisodeID = E.EpisodeID
+    where WebtoonID = wId
+    group by WebtoonID;
+    IF newRating IS NOT NULL THEN UPDATE WebtoonAvgRating SET Rating = newRating where WebtoonID = wId;
+    END IF;
+END //
+
+DELIMITER ;
