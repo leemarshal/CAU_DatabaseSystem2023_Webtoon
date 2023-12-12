@@ -102,11 +102,11 @@ VALUES
 (3, 3, 2),
 (4, 4, 2),
 (5, 5, 3),
-(6, 1, 3),
-(7, 2, 4),
-(8, 3, 4),
-(9, 4, 5),
-(10, 5, 5);
+(6, 6, 3),
+(7, 7, 4),
+(8, 8, 4),
+(9, 9, 5),
+(10, 10, 5);
 
 INSERT INTO Episodes (EpisodeID, WebtoonID, Title, ReleaseDate, ThumbnailURL, EpisodeIndex)
 VALUES
