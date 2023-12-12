@@ -41,8 +41,8 @@ VALUES
 
 INSERT INTO Webtoons (WebtoonID, Title, AuthorID, PublishDate, ThumbnailURL)
 VALUES
-(1, 'Webtoon Title 1', 1, '2023-01-01', 'https://example.com/thumbnail1.jpg'),
-(2, 'Webtoon Title 2', 2, '2023-01-02', 'https://example.com/thumbnail2.jpg'),
+(1, '선천적 얼간이들', 1, '2023-01-01', 'https://image-comic.pstatic.net/webtoon/478261/thumbnail/thumbnail_IMAG21_7fbd8610-0a97-40e3-9c63-101ea07fc4b4.jpg'),
+(2, '신혼일기', 2, '2023-01-02', 'https://image-comic.pstatic.net/webtoon/812354/thumbnail/thumbnail_IMAG21_f391c11a-9a74-4e0c-b601-2fcebafffd07.jpg'),
 (3, 'Webtoon Title 3', 3, '2023-01-03', 'https://example.com/thumbnail3.jpg'),
 (4, 'Webtoon Title 4', 4, '2023-01-04', 'https://example.com/thumbnail4.jpg'),
 (5, 'Webtoon Title 5', 5, '2023-01-05', 'https://example.com/thumbnail5.jpg'),
@@ -106,8 +106,8 @@ VALUES
 
 INSERT INTO Episodes (EpisodeID, WebtoonID, Title, ReleaseDate, ThumbnailURL, EpisodeIndex)
 VALUES
-(1, 1, 'Episode 1', '2023-01-01', 'https://example.com/ep_thumbnail1.jpg', 1),
-(2, 1, 'Episode 2', '2023-01-08', 'https://example.com/ep_thumbnail2.jpg', 2),
+(1, 1, 'EP.0_예고편', '2023-01-01', 'https://image-comic.pstatic.net/webtoon/478261/1/inst_thumbnail_20120614155000.jpg', 1),
+(2, 1, 'EP.1_할로 애부리완', '2023-01-08', 'https://image-comic.pstatic.net/webtoon/478261/2/inst_thumbnail_20120620162422.jpg', 2),
 (3, 1, 'Episode 3', '2023-01-15', 'https://example.com/ep_thumbnail3.jpg', 3),
 (4, 1, 'Episode 4', '2023-01-22', 'https://example.com/ep_thumbnail4.jpg', 4),
 (5, 1, 'Episode 5', '2023-01-29', 'https://example.com/ep_thumbnail5.jpg', 5),
