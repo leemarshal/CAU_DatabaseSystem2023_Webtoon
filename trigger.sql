@@ -12,12 +12,32 @@ BEGIN
 END$$
 DELIMITER ;
 
-DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase;
+DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase_INSERT;
 DELIMITER $$
-CREATE TRIGGER CookieAmountUpdatePurchase
+CREATE TRIGGER CookieAmountUpdatePurchase_INSERT
 AFTER INSERT ON ReaderCookiePurchases
 FOR EACH ROW
 BEGIN
-	UPDATE Readers SET CookieAmount=CookieAmount+NEW.Amount WHERE ReaderID=NEW.ReaderID;
+	UPDATE Readers SET CookieAmount=(SELECT CalculateReaderRemainingCookie(NEW.ReaderID)) WHERE ReaderID=NEW.ReaderID;
+END;$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase_UPDATE;
+DELIMITER $$
+CREATE TRIGGER CookieAmountUpdatePurchase_UPDATE
+AFTER UPDATE ON ReaderCookiePurchases
+FOR EACH ROW
+BEGIN
+	UPDATE Readers SET CookieAmount=(SELECT CalculateReaderRemainingCookie(NEW.ReaderID)) WHERE ReaderID=NEW.ReaderID;
+END;$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase_DELETE;
+DELIMITER $$
+CREATE TRIGGER CookieAmountUpdatePurchase_DELETE
+AFTER DELETE ON ReaderCookiePurchases
+FOR EACH ROW
+BEGIN
+	UPDATE Readers SET CookieAmount=(SELECT CalculateReaderRemainingCookie(OLD.ReaderID)) WHERE ReaderID=OLD.ReaderID;
 END;$$
 DELIMITER ;
