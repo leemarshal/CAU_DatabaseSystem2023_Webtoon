@@ -26,7 +26,7 @@ export default async function Page() {
         <SectionTitleBar title={"전체웹툰"} description={"설명"} />
         <HorizontalComicList props={{ comicList: webtoons }} />
         <SectionTitleBar title={"오늘 연재"} description={"설명"} />
-        <VerticalComicList comicList={comics} />
+        <VerticalComicList props={{ comicList: webtoons }} />
       </div>
     </>
   );
