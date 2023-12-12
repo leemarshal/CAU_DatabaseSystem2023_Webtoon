@@ -16,6 +16,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
 DELIMITER //
 CREATE PROCEDURE DeactivateReader(IN p_ReaderID INT)
     BEGIN

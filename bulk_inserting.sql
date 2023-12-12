@@ -1,4 +1,4 @@
-INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, isActive)
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, IsActive)
 VALUES
 (1, 'username1', 'user1@example.com', 'hash1', 'Male', '1990-01-01', '2020-01-01', TRUE),
 (2, 'username2', 'user2@example.com', 'hash2', 'Female', '1991-02-01', '2020-02-01', TRUE),
@@ -11,7 +11,7 @@ VALUES
 (9, 'username9', 'user9@example.com', 'hash9', 'Male', '1998-09-01', '2020-09-01', TRUE),
 (10, 'username10', 'user10@example.com', 'hash10', 'Female', '1999-10-01', '2020-10-01', TRUE);
 
-INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, isActive)
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, IsActive)
 VALUES
 (11, 'reader1', 'reader1@example.com', 'hash11', 'Male', '1990-11-01', '2020-11-01', TRUE),
 (12, 'reader2', 'reader2@example.com', 'hash12', 'Female', '1991-12-01', '2020-12-01', TRUE),
@@ -24,7 +24,7 @@ VALUES
 (19, 'reader9', 'reader9@example.com', 'hash19', 'Male', '1998-07-19', '2021-07-19', TRUE),
 (20, 'reader10', 'reader10@example.com', 'hash20', 'Female', '1999-08-20', '2021-08-20', TRUE);
 
-INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, isActive)
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate, IsActive)
 VALUES
 (777, 'admin777', 'admin777@example.com', 'hash777', 'Male', '1990-11-01', '2020-11-01', TRUE);
 
