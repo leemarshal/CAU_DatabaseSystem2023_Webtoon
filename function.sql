@@ -62,3 +62,19 @@ END$$
 
 DELIMITER ;
 
+DELIMITER //
+DROP FUNCTION IF EXISTS CalculateReaderRemainingCookie;
+CREATE FUNCTION CalculateReaderRemainingCookie(rId INT) RETURNS INT
+BEGIN
+    DECLARE returnValue INT;
+
+    SELECT sum(RCP.Amount) - sum(RCU.Amount) INTO returnValue
+    from Readers
+             left join local.ReaderCookiePurchases RCP on Readers.ReaderID = RCP.ReaderID
+             left join local.ReaderCookieUse RCU on Readers.ReaderID = RCU.ReaderID
+    where Readers.ReaderID = rId group by Readers.ReaderID;
+
+    RETURN returnValue;
+END //
+
+DELIMITER ;
