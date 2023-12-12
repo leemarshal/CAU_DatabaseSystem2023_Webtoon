@@ -1,5 +1,5 @@
+DROP TRIGGER IF EXISTS AfterUserDeactivation;
 DELIMITER $$
-
 CREATE TRIGGER AfterUserDeactivation
 AFTER UPDATE ON Users
 FOR EACH ROW
@@ -10,5 +10,14 @@ BEGIN
         END IF;
     END IF;
 END$$
+DELIMITER ;
 
+DROP TRIGGER IF EXISTS CookieAmountUpdatePurchase;
+DELIMITER $$
+CREATE TRIGGER CookieAmountUpdatePurchase
+AFTER INSERT ON ReaderCookiePurchases
+FOR EACH ROW
+BEGIN
+	UPDATE Readers SET CookieAmount=CookieAmount+NEW.Amount WHERE ReaderID=NEW.ReaderID;
+END;$$
 DELIMITER ;
