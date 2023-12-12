@@ -34,4 +34,12 @@ CREATE PROCEDURE DeactivateReader(IN p_ReaderID INT)
         COMMIT;
     END IF;
 END //;
+CREATE PROCEDURE DeactivateAuthor(IN p_AuthorID INT)
+    BEGIN
+    DECLARE IsAuthorActive BOOLEAN;
+    SELECT IsActive INTO IsAuthorActive FROM Users WHERE UserID = p_AuthorID;
+    IF IsAuthorActive = False THEN
+       UPDATE Authors SET Salary = 0 WHERE AuthorID = p_AuthorID;
+    END IF;
+END //;
 DELIMITER ;
