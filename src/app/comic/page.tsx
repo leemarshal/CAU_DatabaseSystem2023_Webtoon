@@ -9,14 +9,11 @@ export default async function Comic({ searchParams }: { searchParams: any }) {
   const title = "웹툰 ID : " + searchParams.id;
 
   const prisma = new PrismaClient();
-  const episodes = await prisma.episodesWebtoon.findMany({
+  const episodes = await prisma.episodes.findMany({
     where: {
       WebtoonID: Number(searchParams.id),
     },
     orderBy: [{ EpisodeID: "asc" }],
-    include: {
-      Episodes: true,
-    },
   });
 
   return (
@@ -29,7 +26,7 @@ export default async function Comic({ searchParams }: { searchParams: any }) {
             key={item.EpisodeID}
             path={"/episode?id=" + item.EpisodeID}
             height={70}
-            title={item.Episodes.Title}
+            title={item.Title}
             thumb={""}
           />
         ))}

@@ -49,14 +49,14 @@ model CommentsLikes {
   Readers   Readers?                @relation(fields: [ReaderID], references: [ReaderID], onDelete: Restrict, onUpdate: Restrict, map: "CommentsLikes_ibfk_1")
   Comments  Comments?               @relation(fields: [CommentID], references: [CommentID], onDelete: Restrict, onUpdate: Restrict, map: "CommentsLikes_ibfk_2")
 
+  @@unique([ReaderID, CommentID], map: "ReaderID")
   @@index([CommentID], map: "CommentID")
-  @@index([ReaderID], map: "ReaderID")
 }
 
 model EpisodeAvgRating {
   EpisodeAvgRatingID Int       @id
   EpisodeID          Int?
-  Rating             Decimal?  @db.Decimal(2, 1)
+  Rating             Decimal?  @db.Decimal(3, 1)
   Episodes           Episodes? @relation(fields: [EpisodeID], references: [EpisodeID], onDelete: Restrict, onUpdate: Restrict, map: "EpisodeAvgRating_ibfk_1")
 
   @@index([EpisodeID], map: "EpisodeID")
@@ -76,17 +76,22 @@ model EpisodeRating {
 
 model Episodes {
   EpisodeID        Int                @id
+  WebtoonID        Int?
   Title            String?            @db.VarChar(255)
   ReleaseDate      DateTime?          @db.Date
+  ThumbnailURL     String?            @db.VarChar(255)
+  EpisodeIndex     Int?
   Comments         Comments[]
   EpisodeAvgRating EpisodeAvgRating[]
   EpisodeRating    EpisodeRating[]
+  Webtoons         Webtoons?          @relation(fields: [WebtoonID], references: [WebtoonID], onDelete: Restrict, onUpdate: Restrict, map: "Episodes_ibfk_1")
   EpisodesDialogue EpisodesDialogue[]
   EpisodesImage    EpisodesImage[]
   EpisodesMedia    EpisodesMedia[]
-  EpisodesWebtoon  EpisodesWebtoon?
   ReaderBookmark   ReaderBookmark[]
   Reading          Reading[]
+
+  @@unique([WebtoonID, EpisodeIndex], map: "WebtoonID")
 }
 
 model EpisodesDialogue {
@@ -109,7 +114,7 @@ model EpisodesImage {
   ImageURL       String?   @db.VarChar(255)
   Episodes       Episodes? @relation(fields: [EpisodeID], references: [EpisodeID], onDelete: Restrict, onUpdate: Restrict, map: "EpisodesImage_ibfk_1")
 
-  @@index([EpisodeID], map: "EpisodeID")
+  @@unique([EpisodeID, CutNumber], map: "EpisodeID")
 }
 
 model EpisodesMedia {
@@ -119,15 +124,6 @@ model EpisodesMedia {
   Episodes       Episodes? @relation(fields: [EpisodeID], references: [EpisodeID], onDelete: Restrict, onUpdate: Restrict, map: "EpisodesMedia_ibfk_1")
 
   @@index([EpisodeID], map: "EpisodeID")
-}
-
-model EpisodesWebtoon {
-  EpisodeID Int       @id
-  WebtoonID Int?
-  Episodes  Episodes  @relation(fields: [EpisodeID], references: [EpisodeID], onUpdate: Restrict, map: "EpisodesWebtoon_ibfk_1")
-  Webtoons  Webtoons? @relation(fields: [WebtoonID], references: [WebtoonID], onDelete: Restrict, onUpdate: Restrict, map: "EpisodesWebtoon_ibfk_2")
-
-  @@index([WebtoonID], map: "WebtoonID")
 }
 
 model Genres {
@@ -205,8 +201,8 @@ model ReaderSearch {
 
 model Readers {
   ReaderID              Int                     @id
-  TagID                 Int?
   CookieAmount          Int?
+  IsActive              Boolean?
   Comments              Comments[]
   CommentsLikes         CommentsLikes[]
   EpisodeRating         EpisodeRating[]
@@ -216,12 +212,9 @@ model Readers {
   ReaderPaymentMethods  ReaderPaymentMethods[]
   ReaderSearch          ReaderSearch[]
   Users                 Users                   @relation(fields: [ReaderID], references: [UserID], onUpdate: Restrict, map: "Readers_ibfk_1")
-  Tags                  Tags?                   @relation(fields: [TagID], references: [TagID], onDelete: Restrict, onUpdate: Restrict, map: "Readers_ibfk_2")
   Reading               Reading[]
   Subscriptions         Subscriptions[]
   UserNoticeRead        UserNoticeRead[]
-
-  @@index([TagID], map: "TagID")
 }
 
 model Reading {
@@ -251,7 +244,6 @@ model Tags {
   TagID          Int           @id
   TagName        String?       @db.VarChar(255)
   TagDescription String?       @db.VarChar(255)
-  Readers        Readers[]
   WebtoonTags    WebtoonTags[]
 }
 
@@ -266,15 +258,11 @@ model UserNoticeRead {
 }
 
 model UserTokens {
-  TokenID           Int       @id
-  UserID            Int?
-  JWTToken          String?   @db.VarChar(255)
-  RefreshToken      String?   @db.VarChar(255)
-  JWTExpiration     DateTime? @db.DateTime(0)
-  RefreshExpiration DateTime? @db.DateTime(0)
-  CreationDate      DateTime? @db.DateTime(0)
-  LastModifiedDate  DateTime? @db.DateTime(0)
-  Users             Users?    @relation(fields: [UserID], references: [UserID], onDelete: Restrict, onUpdate: Restrict, map: "UserTokens_ibfk_1")
+  Token        String    @id @db.VarChar(255)
+  UserID       Int?
+  Expiration   DateTime? @db.DateTime(0)
+  CreationDate DateTime? @db.DateTime(0)
+  Users        Users?    @relation(fields: [UserID], references: [UserID], onDelete: Restrict, onUpdate: Restrict, map: "UserTokens_ibfk_1")
 
   @@index([UserID], map: "UserID")
 }
@@ -296,7 +284,7 @@ model Users {
 model WebtoonAvgRating {
   WebtoonAvgRatingID Int       @id
   WebtoonID          Int?
-  Rating             Decimal?  @db.Decimal(2, 1)
+  Rating             Decimal?  @db.Decimal(3, 1)
   Webtoons           Webtoons? @relation(fields: [WebtoonID], references: [WebtoonID], onDelete: Restrict, onUpdate: Restrict, map: "WebtoonAvgRating_ibfk_1")
 
   @@index([WebtoonID], map: "WebtoonID")
@@ -336,13 +324,21 @@ model Webtoons {
   PublishDate      DateTime?          @db.Date
   ThumbnailURL     String?            @db.VarChar(255)
   AuthorsWebtoons  AuthorsWebtoons[]
-  EpisodesWebtoon  EpisodesWebtoon[]
+  Episodes         Episodes[]
   ReaderBookmark   ReaderBookmark[]
   Subscriptions    Subscriptions[]
   WebtoonAvgRating WebtoonAvgRating[]
   WebtoonGenres    WebtoonGenres[]
   WebtoonStatus    WebtoonStatus?
   WebtoonTags      WebtoonTags[]
+}
+
+model PromotionEvent {
+  event_id             Int       @id
+  start_date           DateTime? @db.Date
+  end_date             DateTime? @db.Date
+  event_title          String?   @db.VarChar(255)
+  cookie_discount_rate Int?
 }
 
 enum WebtoonStatus_Status {
