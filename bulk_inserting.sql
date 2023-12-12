@@ -136,7 +136,7 @@ VALUES
 
 INSERT INTO EpisodesImage (EpisodeImageID, EpisodeID, CutNumber, ImageURL)
 VALUES
-(1, 1, 1, 'https://example.com/image1.jpg'),
+(1, 1, 1, 'https://image-comic.pstatic.net/webtoon/478261/1/20200225203040_366e893e3f04a79be7fb8ca7d9551548_IMAG01_1.jpg'),
 (2, 1, 2, 'https://example.com/image2.jpg'),
 (3, 1, 3, 'https://example.com/image3.jpg'),
 (4, 1, 4, 'https://example.com/image4.jpg'),
