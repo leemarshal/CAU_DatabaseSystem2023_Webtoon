@@ -1,42 +1,3 @@
-INSERT INTO Webtoons (WebtoonID, Title, AuthorID, PublishDate, ThumbnailURL)
-VALUES
-(1, 'Webtoon Title 1', 1, '2023-01-01', 'https://example.com/thumbnail1.jpg'),
-(2, 'Webtoon Title 2', 2, '2023-01-02', 'https://example.com/thumbnail2.jpg'),
-(3, 'Webtoon Title 3', 3, '2023-01-03', 'https://example.com/thumbnail3.jpg'),
-(4, 'Webtoon Title 4', 4, '2023-01-04', 'https://example.com/thumbnail4.jpg'),
-(5, 'Webtoon Title 5', 5, '2023-01-05', 'https://example.com/thumbnail5.jpg'),
-(6, 'Webtoon Title 6', 6, '2023-01-06', 'https://example.com/thumbnail6.jpg'),
-(7, 'Webtoon Title 7', 7, '2023-01-07', 'https://example.com/thumbnail7.jpg'),
-(8, 'Webtoon Title 8', 8, '2023-01-08', 'https://example.com/thumbnail8.jpg'),
-(9, 'Webtoon Title 9', 9, '2023-01-09', 'https://example.com/thumbnail9.jpg'),
-(10, 'Webtoon Title 10', 10, '2023-01-10', 'https://example.com/thumbnail10.jpg');
-
-INSERT INTO Authors (AuthorID, Salary)
-VALUES
-(1, 5000),
-(2, 5500),
-(3, 6000),
-(4, 6500),
-(5, 7000),
-(6, 7500),
-(7, 8000),
-(8, 8500),
-(9, 9000),
-(10, 10000);
-
-INSERT INTO WebtoonStatus (WebtoonID, Status)
-VALUES
-(1, 'Ongoing'),
-(2, 'Completed'),
-(3, 'Ongoing'),
-(4, 'Completed'),
-(5, 'Ongoing'),
-(6, 'Completed'),
-(7, 'Ongoing'),
-(8, 'Completed'),
-(9, 'Ongoing'),
-(10, 'Completed');
-
 INSERT INTO Users (UserID, Username, Email, PasswordHash, UserType, Gender, DateOfBirth, JoinDate)
 VALUES
 (1, 'username1', 'user1@example.com', 'hash1', 'Author', 'Male', '1990-01-01', '2020-01-01'),
@@ -77,6 +38,32 @@ VALUES
 (8, 8500),
 (9, 9000),
 (10, 10000);
+
+INSERT INTO Webtoons (WebtoonID, Title, AuthorID, PublishDate, ThumbnailURL)
+VALUES
+(1, 'Webtoon Title 1', 1, '2023-01-01', 'https://example.com/thumbnail1.jpg'),
+(2, 'Webtoon Title 2', 2, '2023-01-02', 'https://example.com/thumbnail2.jpg'),
+(3, 'Webtoon Title 3', 3, '2023-01-03', 'https://example.com/thumbnail3.jpg'),
+(4, 'Webtoon Title 4', 4, '2023-01-04', 'https://example.com/thumbnail4.jpg'),
+(5, 'Webtoon Title 5', 5, '2023-01-05', 'https://example.com/thumbnail5.jpg'),
+(6, 'Webtoon Title 6', 6, '2023-01-06', 'https://example.com/thumbnail6.jpg'),
+(7, 'Webtoon Title 7', 7, '2023-01-07', 'https://example.com/thumbnail7.jpg'),
+(8, 'Webtoon Title 8', 8, '2023-01-08', 'https://example.com/thumbnail8.jpg'),
+(9, 'Webtoon Title 9', 9, '2023-01-09', 'https://example.com/thumbnail9.jpg'),
+(10, 'Webtoon Title 10', 10, '2023-01-10', 'https://example.com/thumbnail10.jpg');
+
+INSERT INTO WebtoonStatus (WebtoonID, Status)
+VALUES
+(1, 'Ongoing'),
+(2, 'Completed'),
+(3, 'Ongoing'),
+(4, 'Completed'),
+(5, 'Ongoing'),
+(6, 'Completed'),
+(7, 'Ongoing'),
+(8, 'Completed'),
+(9, 'Ongoing'),
+(10, 'Completed');
 
 INSERT INTO Tags (TagID, TagName, TagDescription)
 VALUES
@@ -407,16 +394,16 @@ INSERT INTO Notice (NoticeID, Title, Content, PostedDate, IsActive) VALUES
 (10, 'Thank You for Your Support', 'We appreciate your continued support!', '2023-12-01', 'True');
 
 INSERT INTO UserNoticeRead (ReaderID, NoticeID) VALUES
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 3),
-(5, 4),
-(1, 5),
-(2, 6),
-(3, 7),
-(4, 8),
-(5, 9);
+(11, 1),
+(12, 1),
+(13, 2),
+(14, 3),
+(15, 4),
+(11, 5),
+(12, 6),
+(13, 7),
+(14, 8),
+(15, 9);
 
 INSERT INTO Subscriptions (ReaderID, WebtoonID, SubscriptionDate) VALUES
 (11, 1, '2023-01-02'),
