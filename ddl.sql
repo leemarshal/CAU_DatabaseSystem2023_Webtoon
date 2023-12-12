@@ -53,7 +53,7 @@ CREATE TABLE Users (
     Email VARCHAR(255),
     PasswordHash VARCHAR(255),
     Gender VARCHAR(50),
-    isActive BOOLEAN,
+    IsActive BOOLEAN,
     DateOfBirth DATE,
     JoinDate DATE
     -- 추가 속성이 있다면 여기에 삽입하십시오.
