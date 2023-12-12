@@ -1,28 +1,32 @@
-INSERT INTO Users (UserID, Username, Email, PasswordHash, UserType, Gender, DateOfBirth, JoinDate)
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate)
 VALUES
-(1, 'username1', 'user1@example.com', 'hash1', 'Author', 'Male', '1990-01-01', '2020-01-01'),
-(2, 'username2', 'user2@example.com', 'hash2', 'Author', 'Female', '1991-02-01', '2020-02-01'),
-(3, 'username3', 'user3@example.com', 'hash3', 'Author', 'Male', '1992-03-01', '2020-03-01'),
-(4, 'username4', 'user4@example.com', 'hash4', 'Author', 'Female', '1993-04-01', '2020-04-01'),
-(5, 'username5', 'user5@example.com', 'hash5', 'Author', 'Male', '1994-05-01', '2020-05-01'),
-(6, 'username6', 'user6@example.com', 'hash6', 'Author', 'Female', '1995-06-01', '2020-06-01'),
-(7, 'username7', 'user7@example.com', 'hash7', 'Author', 'Male', '1996-07-01', '2020-07-01'),
-(8, 'username8', 'user8@example.com', 'hash8', 'Author', 'Female', '1997-08-01', '2020-08-01'),
-(9, 'username9', 'user9@example.com', 'hash9', 'Author', 'Male', '1998-09-01', '2020-09-01'),
-(10, 'username10', 'user10@example.com', 'hash10', 'Author', 'Female', '1999-10-01', '2020-10-01');
+(1, 'username1', 'user1@example.com', 'hash1', 'Male', '1990-01-01', '2020-01-01'),
+(2, 'username2', 'user2@example.com', 'hash2', 'Female', '1991-02-01', '2020-02-01'),
+(3, 'username3', 'user3@example.com', 'hash3', 'Male', '1992-03-01', '2020-03-01'),
+(4, 'username4', 'user4@example.com', 'hash4', 'Female', '1993-04-01', '2020-04-01'),
+(5, 'username5', 'user5@example.com', 'hash5', 'Male', '1994-05-01', '2020-05-01'),
+(6, 'username6', 'user6@example.com', 'hash6', 'Female', '1995-06-01', '2020-06-01'),
+(7, 'username7', 'user7@example.com', 'hash7', 'Male', '1996-07-01', '2020-07-01'),
+(8, 'username8', 'user8@example.com', 'hash8', 'Female', '1997-08-01', '2020-08-01'),
+(9, 'username9', 'user9@example.com', 'hash9', 'Male', '1998-09-01', '2020-09-01'),
+(10, 'username10', 'user10@example.com', 'hash10', 'Female', '1999-10-01', '2020-10-01');
 
-INSERT INTO Users (UserID, Username, Email, PasswordHash, UserType, Gender, DateOfBirth, JoinDate)
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate)
 VALUES
-(11, 'reader1', 'reader1@example.com', 'hash11', 'Reader', 'Male', '1990-11-01', '2020-11-01'),
-(12, 'reader2', 'reader2@example.com', 'hash12', 'Reader', 'Female', '1991-12-01', '2020-12-01'),
-(13, 'reader3', 'reader3@example.com', 'hash13', 'Reader', 'Male', '1992-01-13', '2021-01-13'),
-(14, 'reader4', 'reader4@example.com', 'hash14', 'Reader', 'Female', '1993-02-14', '2021-02-14'),
-(15, 'reader5', 'reader5@example.com', 'hash15', 'Reader', 'Male', '1994-03-15', '2021-03-15'),
-(16, 'reader6', 'reader6@example.com', 'hash16', 'Reader', 'Female', '1995-04-16', '2021-04-16'),
-(17, 'reader7', 'reader7@example.com', 'hash17', 'Reader', 'Male', '1996-05-17', '2021-05-17'),
-(18, 'reader8', 'reader8@example.com', 'hash18', 'Reader', 'Female', '1997-06-18', '2021-06-18'),
-(19, 'reader9', 'reader9@example.com', 'hash19', 'Reader', 'Male', '1998-07-19', '2021-07-19'),
-(20, 'reader10', 'reader10@example.com', 'hash20', 'Reader', 'Female', '1999-08-20', '2021-08-20');
+(11, 'reader1', 'reader1@example.com', 'hash11', 'Male', '1990-11-01', '2020-11-01'),
+(12, 'reader2', 'reader2@example.com', 'hash12', 'Female', '1991-12-01', '2020-12-01'),
+(13, 'reader3', 'reader3@example.com', 'hash13', 'Male', '1992-01-13', '2021-01-13'),
+(14, 'reader4', 'reader4@example.com', 'hash14', 'Female', '1993-02-14', '2021-02-14'),
+(15, 'reader5', 'reader5@example.com', 'hash15', 'Male', '1994-03-15', '2021-03-15'),
+(16, 'reader6', 'reader6@example.com', 'hash16', 'Female', '1995-04-16', '2021-04-16'),
+(17, 'reader7', 'reader7@example.com', 'hash17', 'Male', '1996-05-17', '2021-05-17'),
+(18, 'reader8', 'reader8@example.com', 'hash18', 'Female', '1997-06-18', '2021-06-18'),
+(19, 'reader9', 'reader9@example.com', 'hash19', 'Male', '1998-07-19', '2021-07-19'),
+(20, 'reader10', 'reader10@example.com', 'hash20', 'Female', '1999-08-20', '2021-08-20');
+
+INSERT INTO Users (UserID, Username, Email, PasswordHash, Gender, DateOfBirth, JoinDate)
+VALUES
+(777, 'admin777', 'admin777@example.com', 'hash777', 'Male', '1990-11-01', '2020-11-01');
 
 -- hash 값은 수정 필요
 

@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS Subscriptions;
 DROP TABLE IF EXISTS WebtoonStatus;
 DROP TABLE IF EXISTS Readers;
 DROP TABLE IF EXISTS Authors;
+DROP TABLE IF EXISTS Administrator;
 DROP TABLE IF EXISTS Episodes;
 DROP TABLE IF EXISTS Webtoons;
 DROP TABLE IF EXISTS Users;
@@ -50,8 +51,8 @@ CREATE TABLE Users (
     Username VARCHAR(255),
     Email VARCHAR(255),
     PasswordHash VARCHAR(255),
-    UserType VARCHAR(50),
     Gender VARCHAR(50),
+    isActive BOOLEAN,
     DateOfBirth DATE,
     JoinDate DATE
     -- 추가 속성이 있다면 여기에 삽입하십시오.
@@ -73,8 +74,14 @@ CREATE TABLE Tags (
 CREATE TABLE Readers (
     ReaderID INT PRIMARY KEY,
     CookieAmount INT,
-    IsActive BOOLEAN,
     FOREIGN KEY (ReaderID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Administrator (
+    AdministratorID INT PRIMARY KEY,
+    Salary int,
+    Level int,
+    FOREIGN KEY (AdministratorID) REFERENCES Users(UserID)
 );
 
 CREATE TABLE AuthorsWebtoons (
@@ -273,7 +280,7 @@ CREATE TABLE Notice (
     Title VARCHAR(255),
     Content VARCHAR(255),
     PostedDate DATE,
-    IsActive ENUM('True', 'False')
+    IsActive BOOLEAN
     -- IsActive is an ENUM to ensure it only contains 'True' or 'False'.
 );
 
