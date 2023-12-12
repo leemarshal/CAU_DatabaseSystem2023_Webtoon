@@ -157,16 +157,14 @@ model ReaderBookmark {
 }
 
 model ReaderCookiePurchases {
-  ReaderCookiePurchaseID Int                   @id @default(autoincrement())
+  ReaderCookiePurchaseID Int       @id @default(autoincrement())
   ReaderID               Int?
   Amount                 Int?
-  Date                   DateTime?             @db.Date
+  Date                   DateTime? @db.Date
   ReaderPaymentMethodID  Int?
-  Readers                Readers?              @relation(fields: [ReaderID], references: [ReaderID], onDelete: Restrict, onUpdate: Restrict, map: "ReaderCookiePurchases_ibfk_1")
-  ReaderPaymentMethods   ReaderPaymentMethods? @relation(fields: [ReaderPaymentMethodID], references: [ReaderPaymentMethodID], onDelete: Restrict, onUpdate: Restrict, map: "ReaderCookiePurchases_ibfk_2")
+  Readers                Readers?  @relation(fields: [ReaderID], references: [ReaderID], onDelete: Restrict, onUpdate: Restrict, map: "ReaderCookiePurchases_ibfk_1")
 
   @@index([ReaderID], map: "ReaderID")
-  @@index([ReaderPaymentMethodID], map: "ReaderPaymentMethodID")
 }
 
 model ReaderCookieUse {
@@ -180,11 +178,10 @@ model ReaderCookieUse {
 }
 
 model ReaderPaymentMethods {
-  ReaderPaymentMethodID Int                     @id
+  ReaderPaymentMethodID Int      @id
   ReaderID              Int?
-  PaymentMethodDetails  String?                 @db.VarChar(255)
-  ReaderCookiePurchases ReaderCookiePurchases[]
-  Readers               Readers?                @relation(fields: [ReaderID], references: [ReaderID], onDelete: Restrict, onUpdate: Restrict, map: "ReaderPaymentMethods_ibfk_1")
+  PaymentMethodDetails  String?  @db.VarChar(255)
+  Readers               Readers? @relation(fields: [ReaderID], references: [ReaderID], onDelete: Restrict, onUpdate: Restrict, map: "ReaderPaymentMethods_ibfk_1")
 
   @@index([ReaderID], map: "ReaderID")
 }
