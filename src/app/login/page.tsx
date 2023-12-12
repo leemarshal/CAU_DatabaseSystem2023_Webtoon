@@ -21,6 +21,7 @@ export default () => {
       const loginResult = await axios.post("/api/login", loginForm);
       if (loginResult.data.token) {
         router.push("/");
+        router.refresh();
       }
       console.log(getCookie("token"));
     } catch (e) {

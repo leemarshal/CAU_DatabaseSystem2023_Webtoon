@@ -34,5 +34,6 @@ export async function POST(request: Request) {
     },
   });
   cookies().set("token", token, { httpOnly: true });
+  prisma.$disconnect();
   return Response.json({ token: token });
 }

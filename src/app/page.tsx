@@ -4,6 +4,8 @@ import SectionTitleBar from "./home/components/SectionTitleBar";
 import HorizontalComicList from "./home/components/HorizontalComicList";
 import VerticalComicList from "./home/components/VerticalComicList";
 import { PrismaClient } from "@prisma/client";
+import { cookies } from "next/headers";
+import { Sql } from "@prisma/client/runtime/library";
 
 export default async function Page() {
   const TOOLBAR_HEIGHT = 70;
@@ -19,9 +21,30 @@ export default async function Page() {
   const prisma = new PrismaClient();
   const webtoons = await prisma.webtoons.findMany();
 
+  const token = cookies().get("token");
+  let user;
+  if (token?.value) {
+    const session = await prisma.userTokens.findFirst({
+      where: {
+        Token: token.value,
+      },
+    });
+    if (session?.UserID) {
+      user = await prisma.users.findFirst({
+        where: {
+          UserID: session?.UserID,
+        },
+      });
+    }
+  }
+
   return (
     <>
-      <ToolBar title={"웹툰 서비스 데모"} height={TOOLBAR_HEIGHT} />
+      <ToolBar
+        title={"웹툰 서비스 데모"}
+        height={TOOLBAR_HEIGHT}
+        userName={user?.Username ?? undefined}
+      />
       <div style={{ paddingTop: TOOLBAR_HEIGHT, background: "white" }}>
         <SectionTitleBar title={"전체웹툰"} description={"설명"} />
         <HorizontalComicList props={{ comicList: webtoons }} />
