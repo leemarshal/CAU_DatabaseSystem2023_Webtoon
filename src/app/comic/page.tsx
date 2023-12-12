@@ -27,7 +27,7 @@ export default async function Comic({ searchParams }: { searchParams: any }) {
             path={"/episode?id=" + item.EpisodeID}
             height={70}
             title={item.Title}
-            thumb={""}
+            thumb={item.ThumbnailURL ?? ""}
           />
         ))}
       </div>
