@@ -74,7 +74,7 @@ CREATE TABLE Readers (
     ReaderID INT PRIMARY KEY,
     CookieAmount INT,
     IsActive BOOLEAN,
-    FOREIGN KEY (ReaderID) REFERENCES Users(UserID),
+    FOREIGN KEY (ReaderID) REFERENCES Users(UserID)
 );
 
 CREATE TABLE AuthorsWebtoons (
@@ -306,43 +306,3 @@ CREATE TABLE PromotionEvent (
     event_title VARCHAR(255),
     cookie_discount_rate INT
 );
-
-'''
-ALTER TABLE `gyu_db`.`AuthorsWebtoons`
-DROP FOREIGN KEY `AuthorsWebtoons_ibfk_1`,
-DROP FOREIGN KEY `AuthorsWebtoons_ibfk_2`;
-ALTER TABLE `gyu_db`.`AuthorsWebtoons`
-ADD CONSTRAINT `AuthorsWebtoons_ibfk_1`
-  FOREIGN KEY (`WebtoonID`)
-  REFERENCES `gyu_db`.`Webtoons` (`WebtoonID`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE,
-ADD CONSTRAINT `AuthorsWebtoons_ibfk_2`
-  FOREIGN KEY (`AuthorID`)
-  REFERENCES `gyu_db`.`Authors` (`AuthorID`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `gyu_db`.`Comments`
-DROP FOREIGN KEY `Comments_ibfk_1`,
-DROP FOREIGN KEY `Comments_ibfk_2`;
-ALTER TABLE `gyu_db`.`Comments`
-ADD CONSTRAINT `Comments_ibfk_1`
-  FOREIGN KEY (`EpisodeID`)
-  REFERENCES `gyu_db`.`Episodes` (`EpisodeID`)
-  ON DELETE CASCADE
-  ON UPDATE RESTRICT,
-ADD CONSTRAINT `Comments_ibfk_2`
-  FOREIGN KEY (`ReaderID`)
-  REFERENCES `gyu_db`.`Readers` (`ReaderID`)
-  ON DELETE RESTRICT
-  ON UPDATE RESTRICT;
-
-ALTER TABLE `gyu_db`.`CommentsLikes`
-DROP FOREIGN KEY `CommentsLikes_ibfk_2`;
-ALTER TABLE `gyu_db`.`CommentsLikes`
-ADD CONSTRAINT `CommentsLikes_ibfk_2`
-  FOREIGN KEY (`CommentID`)
-  REFERENCES `gyu_db`.`Comments` (`CommentID`)
-  ON DELETE CASCADE;
-'''
