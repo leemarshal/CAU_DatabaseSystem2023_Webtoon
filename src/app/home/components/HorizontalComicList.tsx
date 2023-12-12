@@ -12,14 +12,7 @@ export default function HorizontalComicList({
   };
 }) {
   return (
-    <div
-      style={{
-        padding: 20,
-        overflow: "scroll",
-        whiteSpace: "nowrap",
-        background: "white",
-      }}
-    >
+    <div className={"flex overflow-x-auto items-stretch"}>
       {props.comicList.map((item, index) => (
         <ComicItem
           key={index}
@@ -27,7 +20,6 @@ export default function HorizontalComicList({
             title: item.Title ?? "",
             image: item.ThumbnailURL ?? "",
             path: "/comic?id=" + item.WebtoonID,
-            width: "45%",
           }}
         />
       ))}
