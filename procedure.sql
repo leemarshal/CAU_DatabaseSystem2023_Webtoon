@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS UpdateEpisodeAvgRatings;
 DELIMITER //
 
 CREATE PROCEDURE UpdateEpisodeAvgRatings(IN eId INT)
@@ -32,25 +33,31 @@ END //
 
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS DeactivateReader;
 DELIMITER //
 CREATE PROCEDURE DeactivateReader(IN p_ReaderID INT)
-    BEGIN
-    DECLARE IsReaderActive BOOLEAN ;
-    SELECT IsActive INTO IsReaderActive FROM Readers WHERE ReaderID = p_ReaderID;
+BEGIN
+    DECLARE IsReaderActive BOOLEAN;
+
+    -- 활성 상태 확인
+    SELECT IsActive INTO IsReaderActive FROM Users WHERE UserID = p_ReaderID;
+
     IF IsReaderActive = False THEN
-        UPDATE Users SET Username = 'Unknown' WHERE UserID = p_ReaderID;
+        -- 데이터 삭제
         DELETE FROM ReaderBookmark WHERE ReaderID = p_ReaderID;
         DELETE FROM Subscriptions WHERE ReaderID = p_ReaderID;
-        DELETE FROM ReaderBookmark WHERE ReaderID = p_ReaderID;
+        DELETE FROM Reading WHERE ReaderID = p_ReaderID;
         DELETE FROM ReaderSearch WHERE ReaderID = p_ReaderID;
         DELETE FROM UserNoticeRead WHERE ReaderID = p_ReaderID;
         DELETE FROM ReaderPaymentMethods WHERE ReaderID = p_ReaderID;
-        UPDATE ReaderCookiePurchases SET ReaderPaymentMethodID = '0' WHERE ReaderID = p_ReaderID;
-
-        COMMIT;
+        -- 트리거에서 실행될 프로시저. 트랜잭션 제외함.
     END IF;
-END //;
+END //
 
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS DeactivateAuthor;
+DELIMITER //
 CREATE PROCEDURE DeactivateAuthor(IN p_AuthorID INT)
     BEGIN
     DECLARE IsAuthorActive BOOLEAN;
@@ -63,7 +70,7 @@ DELIMITER ;
 
 
 
-
+DROP PROCEDURE IF EXISTS UpdateWebtoonAvgRatings;
 DELIMITER //
 
 CREATE PROCEDURE UpdateWebtoonAvgRatings(IN wId INT)
