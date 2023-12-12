@@ -1,18 +1,24 @@
 'use client'
 import ToolBar from "@/app/cookie/components/ToolBar";
 import CookiePurchaseItem from "@/app/cookie/components/CookiePurchaseItem";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function Cookie() {
     const TOOLBAR_HEIGHT = 70;
     const [isDialogOpen, setDialogOpen] = useState(false)
     const [selectedItemPrice, setSelectedItemPrice] = useState(0)
+    const [userCookieBalance, setUserCookieBalance] = useState(0)
 
     const onClick = (price: number) => {
         //todo: 여기에 결제 붙이시면 됩니다
         setSelectedItemPrice(price)
         setDialogOpen(true)
     }
+
+    useEffect(()=>{
+        //todo: 여기에 현재 쿠키 개수
+        setUserCookieBalance(200)
+    },[])
 
     const dummyButtons = [
         {cookies: 50, price: 2000, desc: ""},
@@ -27,7 +33,8 @@ export default function Cookie() {
     return (
         <>
             <ToolBar title={"쿠키 구매"} height={TOOLBAR_HEIGHT}/>
-            <div style={{marginTop: TOOLBAR_HEIGHT, paddingTop: 10}}>
+            <div style={{marginTop: TOOLBAR_HEIGHT, paddingTop: 10, paddingBottom: 40}}>
+                <div style={{textAlign:"center", margin:"60px 0 80px", fontSize: 20, fontWeight: 500}}>현재 쿠키 : {userCookieBalance}개</div>
                 {dummyButtons.map((item, idx) =>
                     <CookiePurchaseItem
                         key={idx}
