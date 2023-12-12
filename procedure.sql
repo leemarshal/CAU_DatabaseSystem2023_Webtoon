@@ -35,6 +35,7 @@ CREATE PROCEDURE DeactivateReader(IN p_ReaderID INT)
         COMMIT;
     END IF;
 END //;
+
 CREATE PROCEDURE DeactivateAuthor(IN p_AuthorID INT)
     BEGIN
     DECLARE IsAuthorActive BOOLEAN;
