@@ -1022,3 +1022,11 @@ BEGIN
 	UPDATE Readers SET CookieAmount=(SELECT CalculateReaderRemainingCookie(OLD.ReaderID)) WHERE ReaderID=OLD.ReaderID;
 END;$$
 DELIMITER ;
+
+DROP VIEW IF EXISTS CommentsWithUserInfo;
+CREATE VIEW CommentsWithUserInfo AS
+	SELECT CommentID, EpisodeID, Users.Username, CommentText, Timestamp, ParentCommentID
+    FROM
+		Comments
+		LEFT JOIN Readers ON Readers.ReaderID=Comments.ReaderID
+        LEFT JOIN Users ON Readers.ReaderID=Users.UserID;
