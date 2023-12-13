@@ -33,13 +33,16 @@ model Comments {
   ReaderID        Int?
   CommentText     String?         @db.VarChar(255)
   Timestamp       DateTime        @default(now()) @db.Timestamp(0)
-  ParentCommentID Int?            @default(-1)
+  ParentCommentID Int?
   Episodes        Episodes?       @relation(fields: [EpisodeID], references: [EpisodeID], onDelete: Cascade, onUpdate: Restrict, map: "Comments_ibfk_1")
   Readers         Readers?        @relation(fields: [ReaderID], references: [ReaderID], onDelete: Restrict, onUpdate: Restrict, map: "Comments_ibfk_2")
+  Comments        Comments?       @relation("CommentsToComments", fields: [ParentCommentID], references: [CommentID], onDelete: Cascade, onUpdate: Restrict, map: "Comments_ibfk_3")
+  other_Comments  Comments[]      @relation("CommentsToComments")
   CommentsLikes   CommentsLikes[]
 
   @@index([EpisodeID], map: "EpisodeID")
   @@index([ReaderID], map: "ReaderID")
+  @@index([ParentCommentID], map: "ParentCommentID")
 }
 
 model CommentsLikes {
@@ -139,8 +142,12 @@ model Notice {
   Title          String?          @db.VarChar(255)
   Content        String?          @db.VarChar(255)
   PostedDate     DateTime?        @db.Date
+  AdminID        Int?
   IsActive       Boolean?
+  Administrator  Administrator?   @relation(fields: [AdminID], references: [AdministratorID], onDelete: Restrict, onUpdate: Restrict, map: "Notice_ibfk_1")
   UserNoticeRead UserNoticeRead[]
+
+  @@index([AdminID], map: "AdminID")
 }
 
 model ReaderBookmark {
@@ -341,10 +348,11 @@ model PromotionEvent {
 }
 
 model Administrator {
-  AdministratorID Int   @id
+  AdministratorID Int      @id
   Salary          Int?
   Level           Int?
-  Users           Users @relation(fields: [AdministratorID], references: [UserID], onUpdate: Restrict, map: "Administrator_ibfk_1")
+  Users           Users    @relation(fields: [AdministratorID], references: [UserID], onUpdate: Restrict, map: "Administrator_ibfk_1")
+  Notice          Notice[]
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -354,7 +362,7 @@ view CommentsWithUserInfo {
   Username        String?  @db.VarChar(255)
   CommentText     String?  @db.VarChar(255)
   Timestamp       DateTime @default(now()) @db.Timestamp(0)
-  ParentCommentID Int?     @default(-1)
+  ParentCommentID Int?
 }
 
 enum WebtoonStatus_Status {
