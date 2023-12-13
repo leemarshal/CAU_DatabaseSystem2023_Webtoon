@@ -279,6 +279,8 @@ CREATE TABLE Notice (
     Title VARCHAR(255),
     Content VARCHAR(255),
     PostedDate DATE,
+    AdminID INT,
+    FOREIGN KEY (AdminID) REFERENCES Administrator(AdministratorID),
     IsActive BOOLEAN
     -- IsActive is an ENUM to ensure it only contains 'True' or 'False'.
 );
@@ -344,6 +346,9 @@ VALUES
 (777, 'admin777', 'admin777@example.com', 'hash777', 'Male', '1990-11-01', '2020-11-01', TRUE);
 
 -- hash 값은 수정 필요
+
+INSERT INTO Administrator (AdministratorID, Salary, Level)
+VALUES (777, 6000, 2);
 
 INSERT INTO Authors (AuthorID, Salary)
 VALUES
@@ -700,17 +705,17 @@ INSERT INTO WebtoonTags (WebtoonTagID, WebtoonID, TagID) VALUES
 (9, 9, 1),
 (10, 10, 6);
 
-INSERT INTO Notice (NoticeID, Title, Content, PostedDate, IsActive) VALUES
-(1, 'Important Update', 'We have an important update for our users.', '2023-01-01', TRUE),
-(2, 'New Webtoon Release', 'Check out our latest webtoon release!', '2023-02-15', TRUE),
-(3, 'Maintenance Notice', 'Scheduled maintenance on our platform.', '2023-03-10', TRUE),
-(4, 'Upcoming Event', 'Get ready for our upcoming event!', '2023-04-05', TRUE),
-(5, 'System Upgrade', 'Our system will undergo an upgrade this weekend.', '2023-05-20', TRUE),
-(6, 'Holiday Closure', 'Our services will be closed for the holiday.', '2023-07-01', TRUE),
-(7, 'Community Poll', 'Share your thoughts in our community poll!', '2023-08-10', TRUE),
-(8, 'Bug Fix', 'We have fixed several bugs on our platform.', '2023-09-15', TRUE),
-(9, 'New Feature Announcement', 'Exciting new features are coming soon!', '2023-10-10', TRUE),
-(10, 'Thank You for Your Support', 'We appreciate your continued support!', '2023-12-01', TRUE);
+INSERT INTO Notice (NoticeID, Title, Content, PostedDate, AdminID, IsActive) VALUES
+(1, 'Important Update', 'We have an important update for our users.', '2023-01-01', 777, TRUE),
+(2, 'New Webtoon Release', 'Check out our latest webtoon release!', '2023-02-15', 777, TRUE),
+(3, 'Maintenance Notice', 'Scheduled maintenance on our platform.', '2023-03-10', 777, TRUE),
+(4, 'Upcoming Event', 'Get ready for our upcoming event!', '2023-04-05', 777, TRUE),
+(5, 'System Upgrade', 'Our system will undergo an upgrade this weekend.', '2023-05-20', 777, TRUE),
+(6, 'Holiday Closure', 'Our services will be closed for the holiday.', '2023-07-01', 777, TRUE),
+(7, 'Community Poll', 'Share your thoughts in our community poll!', '2023-08-10', 777, TRUE),
+(8, 'Bug Fix', 'We have fixed several bugs on our platform.', '2023-09-15', 777, TRUE),
+(9, 'New Feature Announcement', 'Exciting new features are coming soon!', '2023-10-10', 777, TRUE),
+(10, 'Thank You for Your Support', 'We appreciate your continued support!', '2023-12-01', 777, TRUE);
 
 INSERT INTO UserNoticeRead (ReaderID, NoticeID) VALUES
 (11, 1),
@@ -748,8 +753,9 @@ INSERT INTO PromotionEvent (event_id, start_date, end_date, event_title, cookie_
 (9, '2023-10-05', '2023-10-20', 'Halloween Spooktacular', 25),
 (10, '2023-11-25', '2023-12-10', 'Black Friday Extravaganza', 30);
 
-DELIMITER //
 DROP FUNCTION IF EXISTS CalculateNoticeReadRatio;
+
+DELIMITER //
 CREATE FUNCTION CalculateNoticeReadRatio(noticeID INT) RETURNS DECIMAL(5,2)
 BEGIN
     DECLARE totalReadCount INT;
@@ -777,8 +783,9 @@ END //
 
 DELIMITER ;
 
-DELIMITER $$
 DROP FUNCTION IF EXISTS GetMaleSubscriberRatio;
+
+DELIMITER $$
 CREATE FUNCTION GetMaleSubscriberRatio(webtoon_id INT) RETURNS DECIMAL(4,2)
 BEGIN
     DECLARE male_count INT;
@@ -812,8 +819,9 @@ END$$
 
 DELIMITER ;
 
-DELIMITER //
 DROP FUNCTION IF EXISTS CalculateReaderRemainingCookie;
+
+DELIMITER //
 CREATE FUNCTION CalculateReaderRemainingCookie(rId INT) RETURNS INT
 BEGIN
     DECLARE purchased INT;
