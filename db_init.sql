@@ -231,10 +231,12 @@ CREATE TABLE Comments (
     ReaderID INT,
     CommentText VARCHAR(255),
     Timestamp TIMESTAMP,
-    ParentCommentID INT DEFAULT -1,
+    ParentCommentID INT NULL,
     FOREIGN KEY (EpisodeID) REFERENCES Episodes(EpisodeID) ON DELETE CASCADE,
-    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID)
-    -- ParentCommentID is set to -1 by default when there is no parent comment (non-reply comments).
+    FOREIGN KEY (ReaderID) REFERENCES Readers(ReaderID),
+    FOREIGN KEY (ParentCommentID) REFERENCES Comments(CommentID) ON DELETE CASCADE
+    -- ParentCommentID는 NULL 가능하며, 부모 댓글이 없는 경우(NULL) 기본값을 가짐.
+    -- ParentCommentID에 ON DELETE CASCADE 적용.
 );
 
 CREATE TABLE CommentsLikes (
@@ -623,16 +625,16 @@ VALUES
 
 INSERT INTO Comments (CommentID, EpisodeID, ReaderID, CommentText, Timestamp, ParentCommentID)
 VALUES
-(1, 1, 11, '나 뉴진스 하니인데 개추눌렀다.', NOW(), -1),
+(1, 1, 11, '나 뉴진스 하니인데 개추눌렀다.', NOW(), NULL),
 (2, 1, 12, '하니는 그런 말투 안써요', NOW(), 1),
 (3, 1, 13, '나 민지인데 하니 그런 말 쓴다.', NOW(), 1),
-(4, 1, 14, '이런 잦은 휴재 속 꾸준한 웹툰을 보니 문득.. 새삼스럽게.. 대단하다는 생각이든다.', NOW(), -1),
+(4, 1, 14, '이런 잦은 휴재 속 꾸준한 웹툰을 보니 문득.. 새삼스럽게.. 대단하다는 생각이든다.', NOW(), NULL),
 (5, 1, 15, '기습숭배..!', NOW(), 4),
 (6, 1, 16, '문득, 새삼스럽게, 대단 금지', NOW(), 4),
-(7, 1, 17, '와 님들 제가 예상해봤는데 주인공은 사실 죽지 않음. 왜냐하면 주인공 죽으면 특정 연기가 보여야함.', NOW(), -1),
+(7, 1, 17, '와 님들 제가 예상해봤는데 주인공은 사실 죽지 않음. 왜냐하면 주인공 죽으면 특정 연기가 보여야함.', NOW(), NULL),
 (8, 1, 18, '와 쿠키 쓰고 예상한척 ㅋㅋ', NOW(), 7),
 (9, 1, 19, '헉.', NOW(), 7),
-(10, 1, 20, '좋아쒀. 다음화 빠르게 진행시켜.', NOW(), -1);
+(10, 1, 20, '좋아쒀. 다음화 빠르게 진행시켜.', NOW(), NULL);
 
 -- CommentID가 1, 2, 4, 10인 댓글에 대해 Good 타입의 튜플 10개 이상 생성
 INSERT INTO CommentsLikes (LikeID, ReaderID, CommentID, LikeType)
