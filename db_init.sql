@@ -22,13 +22,13 @@ DROP TABLE IF EXISTS Subscriptions;
 DROP TABLE IF EXISTS WebtoonStatus;
 DROP TABLE IF EXISTS Readers;
 DROP TABLE IF EXISTS Authors;
-DROP TABLE IF EXISTS Administrator;
 DROP TABLE IF EXISTS Episodes;
 DROP TABLE IF EXISTS Webtoons;
-DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS Genres;
 DROP TABLE IF EXISTS Notice;
+DROP TABLE IF EXISTS Administrator;
+DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS PromotionEvent;
 
 CREATE TABLE Webtoons (
@@ -909,7 +909,17 @@ CREATE PROCEDURE DeactivateAuthor(IN p_AuthorID INT)
 END //;
 DELIMITER ;
 
-
+DROP PROCEDURE IF EXISTS DeactivateAdministrator;
+DELIMITER //
+CREATE PROCEDURE DeactivateAdministrator(IN p_AdministratorID INT)
+    BEGIN
+    DECLARE IsAdministratorActive BOOLEAN;
+    SELECT IsActive INTO IsAdministratorActive FROM Users WHERE UserID = p_AdministratorID;
+    IF IsAdministratorActive = False THEN
+       UPDATE Administrator SET Salary = 0 WHERE AdministratorID = p_AdministratorID;
+    END IF;
+END //;
+DELIMITER ;
 
 DROP PROCEDURE IF EXISTS UpdateWebtoonAvgRatings;
 DELIMITER //
@@ -962,6 +972,20 @@ BEGIN
     IF OLD.IsActive <> NEW.IsActive AND NEW.IsActive = FALSE THEN
         IF EXISTS (SELECT * FROM Authors WHERE AuthorID = NEW.UserID) THEN
             CALL DeactivateAuthor(NEW.UserID);
+        END IF;
+    END IF;
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS AfterAdministratorDeactivation;
+DELIMITER $$
+CREATE TRIGGER AfterAdministratorDeactivation
+AFTER UPDATE ON Users
+FOR EACH ROW
+BEGIN
+    IF OLD.IsActive <> NEW.IsActive AND NEW.IsActive = FALSE THEN
+        IF EXISTS (SELECT * FROM Administrator WHERE AdministratorID = NEW.UserID) THEN
+            CALL DeactivateAdministrator(NEW.UserID);
         END IF;
     END IF;
 END$$
