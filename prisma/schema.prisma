@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -344,6 +345,16 @@ model Administrator {
   Salary          Int?
   Level           Int?
   Users           Users @relation(fields: [AdministratorID], references: [UserID], onUpdate: Restrict, map: "Administrator_ibfk_1")
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view CommentsWithUserInfo {
+  CommentID       Int      @id
+  EpisodeID       Int?
+  Username        String?  @db.VarChar(255)
+  CommentText     String?  @db.VarChar(255)
+  Timestamp       DateTime @default(now()) @db.Timestamp(0)
+  ParentCommentID Int?     @default(-1)
 }
 
 enum WebtoonStatus_Status {

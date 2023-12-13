@@ -4,7 +4,13 @@ import CommentIcon from "../../icons/CommentIcon";
 import CommentItem from "./CommentItem";
 
 export default function CommentFab({
-  comments = [{ id: 1, replier_name: "", text: "" }],
+  comments = [{ CommentID: 1, Username: "", CommentText: "" }],
+}: {
+  comments: {
+    CommentID: number | null;
+    Username: string | null;
+    CommentText: string | null;
+  }[];
 }) {
   const [fabScale, setFabScale] = useState(1);
   const [isCommentPopupOpen, setCommentPopupOpen] = useState(false);
@@ -53,9 +59,9 @@ export default function CommentFab({
         >
           {comments.map((item, index) => (
             <CommentItem
-              key={item.id}
-              name={item.replier_name}
-              text={item.text}
+              key={item.CommentID}
+              name={`${item.Username}`}
+              text={`${item.CommentText}`}
             />
           ))}
         </div>
