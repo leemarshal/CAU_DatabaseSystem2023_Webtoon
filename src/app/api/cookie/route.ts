@@ -46,7 +46,6 @@ export async function POST(request: NextRequest) {
   if (!payMethod)
     return NextResponse.json("No Payment Method", { status: 400 });
 
-  console.log(payMethod.ReaderPaymentMethodID);
   await prisma.readerCookiePurchases.create({
     data: {
       ReaderID: user.UserID,

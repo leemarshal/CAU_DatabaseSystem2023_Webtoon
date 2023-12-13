@@ -11,16 +11,14 @@ import { userFromToken } from "@/func/userFromToken";
 export default async function Page() {
   const TOOLBAR_HEIGHT = 70;
 
-  //todo: DB 연결
-  const comics = [
-    { id: 1, title: "Test", thumb: "https://source.unsplash.com/500x500" },
-    { id: 2, title: "Test", thumb: "https://source.unsplash.com/500x500" },
-    { id: 3, title: "Test", thumb: "https://source.unsplash.com/500x500" },
-    { id: 4, title: "Test", thumb: "https://source.unsplash.com/500x500" },
-  ];
-
   const prisma = new PrismaClient();
   const webtoons = await prisma.webtoons.findMany();
+  const date = new Date();
+  const todayWebtoons = await prisma.webtoons.findMany({
+    where: {
+      PublishDay: date.getDay(),
+    },
+  });
 
   let user, token;
   token = cookies().get("token");
@@ -36,9 +34,9 @@ export default async function Page() {
         userName={user?.Username ?? undefined}
       />
       <div style={{ paddingTop: TOOLBAR_HEIGHT, background: "white" }}>
-        <SectionTitleBar title={"전체웹툰"} description={"설명"} />
-        <HorizontalComicList props={{ comicList: webtoons }} />
         <SectionTitleBar title={"오늘 연재"} description={"설명"} />
+        <HorizontalComicList props={{ comicList: todayWebtoons }} />
+        <SectionTitleBar title={"전체웹툰"} description={"설명"} />
         <VerticalComicList props={{ comicList: webtoons }} />
       </div>
     </>
