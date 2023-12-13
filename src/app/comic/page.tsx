@@ -6,9 +6,10 @@ import { PrismaClient } from "@prisma/client";
 export default async function Comic({ searchParams }: { searchParams: any }) {
   const TOOLBAR_HEIGHT = 70;
 
-  const title = "웹툰 ID : " + searchParams.id;
-
   const prisma = new PrismaClient();
+  const comic = await prisma.webtoons.findFirst({
+    where: { WebtoonID: Number(searchParams.id) },
+  });
   const episodes = await prisma.episodes.findMany({
     where: {
       WebtoonID: Number(searchParams.id),
@@ -18,7 +19,7 @@ export default async function Comic({ searchParams }: { searchParams: any }) {
 
   return (
     <>
-      <ToolBar title={title} height={TOOLBAR_HEIGHT} />
+      <ToolBar title={comic?.Title ?? ""} height={TOOLBAR_HEIGHT} />
 
       <div style={{ paddingTop: TOOLBAR_HEIGHT, background: "white" }}>
         {episodes.map((item) => (

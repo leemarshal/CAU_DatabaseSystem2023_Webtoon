@@ -8,7 +8,7 @@ export default async function Comic({ searchParams }: { searchParams: any }) {
   const TOOLBAR_HEIGHT = 70;
 
   //todo: DB 연결
-  const title = "에피소드 ID : " + searchParams.id;
+
   // const comments = [
   //   { id: 1, replier_name: "작성자", text: "댓글 내용" },
   //   { id: 2, replier_name: "익명", text: "ㅋㅋㅋㅋㅋㅋ" },
@@ -22,6 +22,9 @@ export default async function Comic({ searchParams }: { searchParams: any }) {
   // ];
 
   const prisma = new PrismaClient();
+  const episode = await prisma.episodes.findFirst({
+    where: { EpisodeID: Number(searchParams.id) },
+  });
   const episodeImages = await prisma.episodesImage.findMany({
     where: {
       EpisodeID: Number(searchParams.id),
@@ -35,6 +38,8 @@ export default async function Comic({ searchParams }: { searchParams: any }) {
     orderBy: [{ Timestamp: "asc" }],
   });
   prisma.$disconnect();
+
+  const title = episode?.Title ?? "";
 
   return (
     <>

@@ -367,9 +367,9 @@ VALUES
 
 INSERT INTO Webtoons (WebtoonID, Title, AuthorID, PublishDate, PublishDay, ThumbnailURL)
 VALUES
-(1, '선천적 얼간이들', 1, '2023-01-01', 0, 'https://image-comic.pstatic.net/webtoon/478261/thumbnail/thumbnail_IMAG21_7fbd8610-0a97-40e3-9c63-101ea07fc4b4.jpg'),
-(2, '신혼일기', 2, '2023-01-02', 0, 'https://image-comic.pstatic.net/webtoon/812354/thumbnail/thumbnail_IMAG21_f391c11a-9a74-4e0c-b601-2fcebafffd07.jpg'),
-(3, 'Webtoon Title 3', 3, '2023-01-03', 1, 'https://example.com/thumbnail3.jpg'),
+(1, '선천적 얼간이들', 1, '2023-01-01', 4, 'https://image-comic.pstatic.net/webtoon/478261/thumbnail/thumbnail_IMAG21_7fbd8610-0a97-40e3-9c63-101ea07fc4b4.jpg'),
+(2, '신혼일기', 2, '2023-01-02', 4, 'https://image-comic.pstatic.net/webtoon/812354/thumbnail/thumbnail_IMAG21_f391c11a-9a74-4e0c-b601-2fcebafffd07.jpg'),
+(3, '마음의소리2', 3, '2023-01-03', 3, 'https://image-comic.pstatic.net/webtoon/814543/thumbnail/thumbnail_IMAG21_df84a681-b7ef-4dda-8cef-25b219d35e3e.jpg'),
 (4, 'Webtoon Title 4', 4, '2023-01-04', 1, 'https://example.com/thumbnail4.jpg'),
 (5, 'Webtoon Title 5', 5, '2023-01-05', 2, 'https://example.com/thumbnail5.jpg'),
 (6, 'Webtoon Title 6', 6, '2023-01-06', 3, 'https://example.com/thumbnail6.jpg'),
@@ -434,14 +434,14 @@ INSERT INTO Episodes (EpisodeID, WebtoonID, Title, ReleaseDate, ThumbnailURL, Ep
 VALUES
 (1, 1, 'EP.0_예고편', '2023-01-01', 'https://image-comic.pstatic.net/webtoon/478261/1/inst_thumbnail_20120614155000.jpg', 1),
 (2, 1, 'EP.1_할로 애부리완', '2023-01-08', 'https://image-comic.pstatic.net/webtoon/478261/2/inst_thumbnail_20120620162422.jpg', 2),
-(3, 1, 'Episode 3', '2023-01-15', 'https://example.com/ep_thumbnail3.jpg', 3),
-(4, 1, 'Episode 4', '2023-01-22', 'https://example.com/ep_thumbnail4.jpg', 4),
-(5, 1, 'Episode 5', '2023-01-29', 'https://example.com/ep_thumbnail5.jpg', 5),
-(6, 1, 'Episode 6', '2023-02-05', 'https://example.com/ep_thumbnail6.jpg', 6),
-(7, 1, 'Episode 7', '2023-02-12', 'https://example.com/ep_thumbnail7.jpg', 7),
-(8, 1, 'Episode 8', '2023-02-19', 'https://example.com/ep_thumbnail8.jpg', 8),
-(9, 1, 'Episode 9', '2023-02-26', 'https://example.com/ep_thumbnail9.jpg', 9),
-(10, 1, 'Episode 10', '2023-03-05', 'https://example.com/ep_thumbnail10.jpg', 10);
+(3, 3, '예고편', '2023-01-15', 'https://image-comic.pstatic.net/webtoon/814543/1/thumbnail_202x120_5444d5b6-f2cc-4ca6-a56a-c40229c0b6d5.jpg', 3),
+(4, 3, '1화 뭐하고 지냈냐면...', '2023-01-22', 'https://image-comic.pstatic.net/webtoon/814543/2/thumbnail_202x120_c57641c8-ca74-4cc9-8147-d533bbe6bea7.jpg', 4),
+(5, 1, 'Episode 3', '2023-01-29', 'https://example.com/ep_thumbnail5.jpg', 5),
+(6, 1, 'Episode 4', '2023-02-05', 'https://example.com/ep_thumbnail6.jpg', 6),
+(7, 1, 'Episode 5', '2023-02-12', 'https://example.com/ep_thumbnail7.jpg', 7),
+(8, 1, 'Episode 6', '2023-02-19', 'https://example.com/ep_thumbnail8.jpg', 8),
+(9, 1, 'Episode 7', '2023-02-26', 'https://example.com/ep_thumbnail9.jpg', 9),
+(10, 1, 'Episode 8', '2023-03-05', 'https://example.com/ep_thumbnail10.jpg', 10);
 
 INSERT INTO EpisodesMedia (EpisodeMediaID, EpisodeID, MediaURL)
 VALUES
@@ -628,13 +628,13 @@ VALUES
 (1, 1, 11, '나 뉴진스 하니인데 개추눌렀다.', NOW(), NULL),
 (2, 1, 12, '하니는 그런 말투 안써요', NOW(), 1),
 (3, 1, 13, '나 민지인데 하니 그런 말 쓴다.', NOW(), 1),
-(4, 1, 14, '이런 잦은 휴재 속 꾸준한 웹툰을 보니 문득.. 새삼스럽게.. 대단하다는 생각이든다.', NOW(), NULL),
-(5, 1, 15, '기습숭배..!', NOW(), 4),
-(6, 1, 16, '문득, 새삼스럽게, 대단 금지', NOW(), 4),
-(7, 1, 17, '와 님들 제가 예상해봤는데 주인공은 사실 죽지 않음. 왜냐하면 주인공 죽으면 특정 연기가 보여야함.', NOW(), NULL),
-(8, 1, 18, '와 쿠키 쓰고 예상한척 ㅋㅋ', NOW(), 7),
-(9, 1, 19, '헉.', NOW(), 7),
-(10, 1, 20, '좋아쒀. 다음화 빠르게 진행시켜.', NOW(), NULL);
+(4, 2, 14, '이런 잦은 휴재 속 꾸준한 웹툰을 보니 문득.. 새삼스럽게.. 대단하다는 생각이든다.', NOW(), NULL),
+(5, 2, 15, '기습숭배..!', NOW(), 4),
+(6, 2, 16, '문득, 새삼스럽게, 대단 금지', NOW(), 4),
+(7, 3, 17, '와 님들 제가 예상해봤는데 주인공은 사실 죽지 않음. 왜냐하면 주인공 죽으면 특정 연기가 보여야함.', NOW(), NULL),
+(8, 3, 18, '와 쿠키 쓰고 예상한척 ㅋㅋ', NOW(), 7),
+(9, 3, 19, '헉.', NOW(), 7),
+(10, 3, 20, '좋아쒀. 다음화 빠르게 진행시켜.', NOW(), NULL);
 
 -- CommentID가 1, 2, 4, 10인 댓글에 대해 Good 타입의 튜플 10개 이상 생성
 INSERT INTO CommentsLikes (LikeID, ReaderID, CommentID, LikeType)
